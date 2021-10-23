@@ -10,3 +10,7 @@
 
 ![Nginx to Php processor](https://user-images.githubusercontent.com/50557587/138572062-9e342910-95e8-470b-8599-6029d77fb13c.PNG)
 
+- Testing PHP with Nginx
+
+![Nginx to Php processor](https://user-images.githubusercontent.com/50557587/138572308-b1f10078-2346-403c-81a4-36844627bbe7.PNG)
+
