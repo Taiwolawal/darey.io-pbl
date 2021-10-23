@@ -14,3 +14,7 @@
 
 ![Nginx to Php processor](https://user-images.githubusercontent.com/50557587/138572308-b1f10078-2346-403c-81a4-36844627bbe7.PNG)
 
+- Retrieving data from Mysql database to PHP
+
+![To-do-list](https://user-images.githubusercontent.com/50557587/138573053-d9afb62c-12ac-4d7e-bbcb-6bc24d9af80e.PNG)
+
