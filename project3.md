@@ -46,6 +46,82 @@ Routes Creation
 
 ![routes](https://user-images.githubusercontent.com/50557587/138792312-e8a2fbe7-2cb5-4e1b-9ee8-c45af144da86.PNG)
 
+Models
+- The app is going to make use of Mongodb which is a NOSQL database, thus we create a model.
+- The model will be used to define database schema.
+- To create a Schema ana a model, we will mongoose which is a Hode.js package.
+- Return back to the Todo folder and install mongoose `npm install mongoose`.
+- Create a new folder `mkdir models` and change directory to newly created models folder `cd models`.
+- Create a file inside the model folder `touch todo.js`.
+- Open the todo.js file  `vim todo.js` and paste the code showing in the screenshot below.
+
+![mongoosee](https://user-images.githubusercontent.com/50557587/138932066-b1978bcf-b685-45fc-9241-93d29e995baf.PNG)
+
+- Return back to the routes directory and open api.js `vim api.js`, delete the code inside `:%d`.
+- Paste the code showing in the screenshot below in the api.js file.
+
+![router new](https://user-images.githubusercontent.com/50557587/138932707-44b7b791-cf00-49e4-ac44-04e9b257ef71.PNG)
+
+MongoDB Database
+- A database is needed to store all our data.
+- MongoDB database provided by mLab will be used for storing data.
+- Sign up for shared cluster free account ideal for our usecase.
+- Change time of deleting entry from 6 hour to 1 week.
+
+![ip address](https://user-images.githubusercontent.com/50557587/138952815-2f9e9c72-67c4-4e92-9e5c-c1d2fa2244d3.PNG)
+
+- Create a MongoDB database and collection inside mLab
+- Create a file in Todo directory `touch .env`.
+- Open the file `vi.env` and paste the following
+
+`DB = mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority`
+
+- username, password, dbname and network address should be inputted accordingly.
+
+![connect to cluster](https://user-images.githubusercontent.com/50557587/138953755-0b2d4091-0bb6-45ce-b7e4-87a9d262790f.PNG)
+
+![connecting](https://user-images.githubusercontent.com/50557587/138954945-b60d70e3-6ddb-4be7-849d-df9c539762ac.PNG)
+
+- We update the `index.js` to reflect the use of `.env`, so that Node.js can connect to the database.
+- Simply delete the existing content in `index.js`.
+- Open the file `vim index.js`, delete content `:%d`.
+- Paste in the code showing in the screenshot below.
+
+![code entered](https://user-images.githubusercontent.com/50557587/138955765-bad371a9-e631-407f-bf47-5de7ea9eef79.PNG)
+
+- Start the server using the command `node index.js`.
+- A message displaying "Database connected successfully" will appear.
+
+![connected successful](https://user-images.githubusercontent.com/50557587/138956042-d5c12395-0fdf-4270-a268-fea6bc1b1fc7.PNG)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
