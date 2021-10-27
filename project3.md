@@ -13,7 +13,7 @@ Backend configuration
 ![node installation](https://user-images.githubusercontent.com/50557587/138787111-88c5b8c8-4219-4069-9196-eff9713fbb27.PNG)
 
 Application Code Setup
-- Create a new directory for your To-Do project` mkdir Todo`
+- Create a new directory for your To-Do project ` mkdir Todo`
 - Confirm the Todo directory with ls command and change current directory to the new created on `cd Todo`
 - Run the command `npm init` to initialise project, thus creating file name package.json
 
@@ -49,7 +49,7 @@ Routes Creation
 Models
 - The app is going to make use of Mongodb which is a NOSQL database, thus we create a model.
 - The model will be used to define database schema.
-- To create a Schema ana a model, we will mongoose which is a Hode.js package.
+- To create a Schema and a model, we will use mongoose which is a Node.js package.
 - Return back to the Todo folder and install mongoose `npm install mongoose`.
 - Create a new folder `mkdir models` and change directory to newly created models folder `cd models`.
 - Create a file inside the model folder `touch todo.js`.
@@ -116,8 +116,8 @@ Frontend Creation
 - In the Todo directory, run  `npx create-react-app client`.
 - Create a folder in the Todo directory called client where all react code will be added.
 - Before testing the react app, some dependencies needs to be installed.
-- Install concurrently `npm install concurrently --save-dev`. It used to run more than one command simultaneously from the same terminal window.
-- Install nodemon `npm install nodemon --save-dev`, it is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
+- Install concurrently `npm install concurrently --save-dev`. It is used to run more than one command simultaneously from the same terminal window.
+- Install nodemon `npm install nodemon --save-dev`. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.
 - In Todo folder, open the package.json file, the section containing "scripts":{..} should be replaced with the code 
 
 `"scripts": {
@@ -142,163 +142,27 @@ Frontend Creation
 Creating React Components
 - Advantage of react is that it makes use of components, which are reusable and also makes code modular.
 - There will be two stateful components and one stateless component.
-- From the Todo directory run `cd client` and move to ` cd src`, create another folder called components `mkdir components`.
+- From the Todo directory run `cd client` and move to src folder ` cd src`, create another folder called components `mkdir components`.
 - Move into components folder `cd components`.
-- Inside the components directory create three  `touch files Input.js  ListTodo.js Todo.js`.
-- Open Imput.js file and paste the code below
+- Inside the components directory create three files `touch files Input.js  ListTodo.js Todo.js`.
+- Open Input.js file and paste the code below
 
-`import React, { Component } from 'react';
-import axios from 'axios';
-
-class Input extends Component {
-
-state = {
-action: ""
-}
-
-addTodo = () => {
-const task = {action: this.state.action}
-
-    if(task.action && task.action.length > 0){
-      axios.post('/api/todos', task)
-        .then(res => {
-          if(res.data){
-            this.props.getTodos();
-            this.setState({action: ""})
-          }
-        })
-        .catch(err => console.log(err))
-    }else {
-      console.log('input field required')
-    }
-
-}
-
-handleChange = (e) => {
-this.setState({
-action: e.target.value
-})
-}
-
-render() {
-let { action } = this.state;
-return (
-<div>
-<input type="text" onChange={this.handleChange} value={action} />
-<button onClick={this.addTodo}>add todo</button>
-</div>
-)
-}
-}
-
-export default Input`
+![inputjs](https://user-images.githubusercontent.com/50557587/139014482-b962d9ed-e42b-4bc4-b4ca-ee1907c33943.PNG)
 
 - To make use of Axios, which is a Promise based HTTP client for the browser and node.js.
 - Move to src folder, to clients folder and install Axios `npm install axios`.
 - Go to component directory `cd src/components`.
 - Open ListTodo.js `vi ListTodo.js` and paste the following code.
 
-`import React from 'react';
+![ListTodo](https://user-images.githubusercontent.com/50557587/139015208-3b6f020c-58d1-4cb3-8f4b-9a89679a1745.PNG)
 
-const ListTodo = ({ todos, deleteTodo }) => {
-
-return (
-<ul>
-{
-todos &&
-todos.length > 0 ?
-(
-todos.map(todo => {
-return (
-<li key={todo._id} onClick={() => deleteTodo(todo._id)}>{todo.action}</li>
-)
-})
-)
-:
-(
-<li>No todo(s) left</li>
-)
-}
-</ul>
-)
-}
-
-export default ListTodo
-`
 - Then in your Todo.js file you write the following code
 
-`import React, {Component} from 'react';
-import axios from 'axios';
+![todo](https://user-images.githubusercontent.com/50557587/139015512-cc502383-620d-47ed-b73b-ebe9187cf268.PNG)
 
-import Input from './Input';
-import ListTodo from './ListTodo';
-
-class Todo extends Component {
-
-state = {
-todos: []
-}
-
-componentDidMount(){
-this.getTodos();
-}
-
-getTodos = () => {
-axios.get('/api/todos')
-.then(res => {
-if(res.data){
-this.setState({
-todos: res.data
-})
-}
-})
-.catch(err => console.log(err))
-}
-
-deleteTodo = (id) => {
-
-    axios.delete(`/api/todos/${id}`)
-      .then(res => {
-        if(res.data){
-          this.getTodos()
-        }
-      })
-      .catch(err => console.log(err))
-
-}
-
-render() {
-let { todos } = this.state;
-
-    return(
-      <div>
-        <h1>My Todo(s)</h1>
-        <Input getTodos={this.getTodos}/>
-        <ListTodo todos={todos} deleteTodo={this.deleteTodo}/>
-      </div>
-    )
-
-}
-}
-
-export default Todo;
-`
 - Move to the src folder and open App.js and paste the code below.
 
-`import React from 'react';
-
-import Todo from './components/Todo';
-import './App.css';
-
-const App = () => {
-return (
-<div className="App">
-<Todo />
-</div>
-);
-}
-
-export default App;`
+![appjs](https://user-images.githubusercontent.com/50557587/139015810-16aa0857-38bf-4eb6-b2c9-7786bb35a237.PNG)
 
 - In the src directory open the App.css `vi App.css` and paste the following code.
 
@@ -393,26 +257,10 @@ margin-top: 0;
 
 - In the src directory open the index.css `vim index.css` and copy and paste the code below:
 
-`body {
-margin: 0;
-padding: 0;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-box-sizing: border-box;
-background-color: #282c34;
-color: #787a80;
-}
-
-code {
-font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-monospace;
-}`
+![index](https://user-images.githubusercontent.com/50557587/139016135-f106d54d-e7eb-4bde-af72-dcfa25117f1a.PNG)
 
 - Go to the Todo directory and run `npm run dev`.
-- Assuming no error , it should work properly
+- Assuming there are no error , it should work properly.
 
 ![project completion](https://user-images.githubusercontent.com/50557587/138975729-680db92a-ce1f-4912-8ff4-689d2913060c.PNG)
 
