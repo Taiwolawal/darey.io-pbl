@@ -66,7 +66,8 @@
 - 
 
 ## Configure Web Servers
-- Launch 3 new EC2 instance with RHEL 8 Operating System.
+- Launch 3 new EC2 instance with RHEL 8 Operating System.'
+- Ensure to open TCP port 80 on all the Web server.
 - Install NFS client and Apache `sudo yum install nfs-utils nfs4-acl-tools -y`, `sudo yum install httpd -y`.
 - Create directory  `mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/apps /var/www`.
 - Run df -h to confirm that NFS was mounted successfully.
@@ -88,10 +89,18 @@
 - cd into tooling `cd tooling/html/`.
 - Deploy the content of the html folder to /var/www/html  sudo cp -R html/. /var/www/html.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
-- Edit the file functions.php.
+- Edit the file functions.php and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
+![p18](https://user-images.githubusercontent.com/50557587/142719391-e1134d6a-5937-4885-a872-9f6a028d6bcf.PNG)
+
 - Install mysql server sudo apt install mysql-server.
 - cd into html folder from tooling .
-- 
+- Connect with the database `sudo mysql -h 172.31.4.144 -u tooling -p tooling < tooling-db.sql`.
+- Launch all the public ip address of the the 3 Web Servers and you will get a login page.
+![p19](https://user-images.githubusercontent.com/50557587/142719481-fe8cae50-7f60-4179-8832-0b879f596343.PNG)
+![p20](https://user-images.githubusercontent.com/50557587/142719486-da85816e-a1ca-4cab-9f33-aee857fa2349.PNG)
+![p21](https://user-images.githubusercontent.com/50557587/142719488-72ba4e1c-1533-4e22-a396-f400d3353a17.PNG)
+
+- Project completed.
 
 
 
@@ -107,6 +116,6 @@
 
 
 
-- 
+
 
 
