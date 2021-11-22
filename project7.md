@@ -19,10 +19,10 @@
 - Install lvm2 `sudo yum install lvm2 -y`.
 - Run pvcreate on the disk to create a physical volume `sudo pvcreate /dev/xvdf1`.
 - Verify physical volume has been created successfully `sudo pvs`.
-- Run vgcreate command on the physical volume to create a volume group webdata-vg ` sudo vgcreate webdata-vg /dev/xvdf1`.
+- Run vgcreate command on the physical volume to create a volume group webdata-vg ` sudo vgcreate webdata-vg /dev/xvdf1`.     
 ![p8](https://user-images.githubusercontent.com/50557587/142699476-3d120828-6b0c-429d-8045-10d08e32bcc8.PNG)
 
-- Create 3 logical volumes lv-apps, lv-logs and lv-opt. `sudo lvcreate -n lv-apps -L 5G webdate-vg`, `sudo lvcreate -n lv-logs -L 5G webdate-vg`, `sudo lvcreate -n lv-opt -l 100%FREE webdate-vg`.
+- Create 3 logical volumes lv-apps, lv-logs and lv-opt. `sudo lvcreate -n lv-apps -L 5G webdata-vg`, `sudo lvcreate -n lv-logs -L 5G webdata-vg`, `sudo lvcreate -n lv-opt -l 100%FREE webdata-vg`.
 ![p9](https://user-images.githubusercontent.com/50557587/142700058-4234f0fe-5fba-47b8-a408-3b80ee85c3f2.PNG)
 
 - Format the disks as xfs `sudo mkfs.xfs /dev/webdata-vg/lv-apps` and the others.
@@ -50,7 +50,7 @@
 ![p13](https://user-images.githubusercontent.com/50557587/142702712-9193799d-fe54-4a12-9248-b54dc4bc3290.PNG)
 ![p14](https://user-images.githubusercontent.com/50557587/142702885-71409361-7298-4fe1-9ed4-2e7339f2a5c5.PNG)
 
-- Check which port is used by the NFS.  
+- Check which port is used by the NFS  and open it using Security Groups (add new Inbound Rule) `rpcinfo -p | grep nfs`.     
 ![p15](https://user-images.githubusercontent.com/50557587/142703026-d7d3ed55-9ebe-49ba-9a5f-d4948a591743.PNG)
 
 - In order for NFS server to be accessible from your client, you must also open following ports: TCP 111, UDP 111, UDP 2049
@@ -75,7 +75,7 @@
 - Locate the log folder for Apache on the Web Server and mount it to NFS server's  export for log.
 - Since the log folder already contains some content we back-up that because if we mount on that directory we lose the content inside.
 - Run command `sudo mv /var/log/httpd /var/log/httpd.bak`, this command renames the folder httpd to httpd.bak with the content still intact.
-- Create a new httpd folder `sudo mkdir /var/log/http` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/logs /var/log/http`.
+- Create a new httpd folder `sudo mkdir /var/log/httpd` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/logs /var/log/httpd`.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/logs /var/log/http nfs defaults 0 0`.     
 ![p16](https://user-images.githubusercontent.com/50557587/142706687-aadec479-7a90-4146-8932-7f0b3df159ab.PNG)
 
