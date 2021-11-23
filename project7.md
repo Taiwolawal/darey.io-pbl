@@ -46,7 +46,7 @@
 - Get the subnet cidr for NFS on the EC2, locate 'Networking' tab and open Subnet link.
 - ![p12](https://user-images.githubusercontent.com/50557587/142702495-d8a05ab6-73e4-44b6-adc4-489c0224a88d.PNG)
 
-- Configure access to NFS for clients with the same subnet "172.31.0.0/20" and run `sudo exportfs -arv`.
+- Configure access to NFS for clients with the same subnet `sudo vi /etc/exports` "172.31.0.0/20" and run `sudo exportfs -arv`.     
 ![p13](https://user-images.githubusercontent.com/50557587/142702712-9193799d-fe54-4a12-9248-b54dc4bc3290.PNG)
 ![p14](https://user-images.githubusercontent.com/50557587/142702885-71409361-7298-4fe1-9ed4-2e7339f2a5c5.PNG)
 
@@ -61,12 +61,12 @@
 - Create database for tooling and other set up
 ![p17](https://user-images.githubusercontent.com/50557587/142710997-998642e1-0e67-4377-911b-ea0c4af35a09.PNG)
 
-- Set the bind address `sudo vi  /etc/mysql/mysql.conf.d/mysqld.cnf` to 0.0.0.0
+- Set the bind address `sudo vi  /etc/mysql/mysql.conf.d/mysqld.cnf` to 0.0.0.0 and restart mysql `sudo systemctl restart mysql`. 
 
 ## Configure Web Servers
 - Launch 3 new EC2 instance with RHEL 8 Operating System.'
 - Ensure to open TCP port 80 on all the Web server.
-- Install NFS client and Apache `sudo yum install nfs-utils nfs4-acl-tools -y`, `sudo yum install httpd -y`.
+- Install NFS client and Apache `sudo yum install nfs-utils nfs4-acl-tools -y`, `sudo systemctl start nfs-server`, `sudo systemctl enable nfs-server`, `sudo systemctl status nfs-server`, `sudo yum install httpd -y`.
 - Create directory  `mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/apps /var/www`.
 - Run df -h to confirm that NFS was mounted successfully.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/apps /var/www nfs defaults 0 0`.
@@ -87,7 +87,7 @@
 - cd into tooling `cd tooling/html/`.
 - Deploy the content of the html folder to /var/www/html  `sudo cp -R html/. /var/www/html`.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
--  Install mysql server sudo apt install mysql-server.
+-  Install mysql server sudo yum install mysql-server.
 -  cd into html folder from tooling .
 - Edit the file functions.php and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
 ![p18](https://user-images.githubusercontent.com/50557587/142719391-e1134d6a-5937-4885-a872-9f6a028d6bcf.PNG)
