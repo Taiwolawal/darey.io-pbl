@@ -58,7 +58,7 @@
 ## Configure Database
 - Install mysql-server `sudo apt install mysql-server`, `sudo systemctl start mysql`, `sudo systemctl enable mysql`, `sudo systemctl status mysql`.
 - sudo mysql_secure_installation.
-- Create database for tooling and other set up
+- Create database for tooling and other set up.     
 ![p17](https://user-images.githubusercontent.com/50557587/142710997-998642e1-0e67-4377-911b-ea0c4af35a09.PNG)
 
 - Set the bind address `sudo vi  /etc/mysql/mysql.conf.d/mysqld.cnf` to 0.0.0.0 and restart mysql `sudo systemctl restart mysql`. 
