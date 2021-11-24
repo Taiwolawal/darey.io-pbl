@@ -92,8 +92,11 @@
 - Deploy the content of the html folder of the Tooling directory to /var/www/html  `sudo cp -R tooling/html/. /var/www/html`.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
 -  Install mysql server sudo yum install mysql-server.
-- Edit the file functions.php `sudo vi /var/www/html/functions.php` and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
+- Edit functions.php `sudo vi /var/www/html/functions.php` and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
 ![p18](https://user-images.githubusercontent.com/50557587/142719391-e1134d6a-5937-4885-a872-9f6a028d6bcf.PNG)
+
+-Install PHP.   
+![php](https://user-images.githubusercontent.com/50557587/143293842-6f6e662e-152a-4165-9b68-d494995069dd.PNG)
 
 - Connect with the database `sudo mysql -h 172.31.4.144 -u tooling -p tooling < tooling-db.sql`.
 - Launch all the public ip address of the the 3 Web Servers and you will get a login page.
