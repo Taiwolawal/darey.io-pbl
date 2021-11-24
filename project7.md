@@ -80,16 +80,19 @@
 ![p16](https://user-images.githubusercontent.com/50557587/142706687-aadec479-7a90-4146-8932-7f0b3df159ab.PNG)
 
 - Run `sudo systemctl daemon-reload` to update.
+- After mount ensure that the folder httpd is in `sudo chmod -R root:root /var/log/httpd` and `sudo chown -R 700 /var/log/httpd`.
 - Copy the content of httpd.bak into httpd folder since mount has already taken place `sudo cp -R /var/log/httpd.bak/. /var/log/httpd`.
+- We can test the web page if it is displaying the test page.    
+![test](https://user-images.githubusercontent.com/50557587/143228029-353c3f54-462a-4206-a0eb-7721e25c93d3.PNG)
+
+
 - Fork the tooling source code from https://github.com/darey-io/tooling to your Github account
 - Install git` sudo yum install git`.
-- Clone the directory `git clone https://github.com/darey.io/tooling.git`, this will create a folder named tooling.
-- cd into tooling `cd tooling/html/`.
-- Deploy the content of the html folder to /var/www/html  `sudo cp -R html/. /var/www/html`.
+- Clone the directory `git clone https://github.com/Taiwolawal/tooling.git`, this will create a folder named tooling.
+- Deploy the content of the html folder of the Tooling directory to /var/www/html  `sudo cp -R tooling/html/. /var/www/html`.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
 -  Install mysql server sudo yum install mysql-server.
--  cd into html folder from tooling .
-- Edit the file functions.php and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
+- Edit the file functions.php `sudo vi /var/www/html/functions.php` and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
 ![p18](https://user-images.githubusercontent.com/50557587/142719391-e1134d6a-5937-4885-a872-9f6a028d6bcf.PNG)
 
 - Connect with the database `sudo mysql -h 172.31.4.144 -u tooling -p tooling < tooling-db.sql`.
