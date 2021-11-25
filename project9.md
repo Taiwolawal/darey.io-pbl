@@ -13,7 +13,7 @@
 - Create a new inbound rule in the EC2 Security Group to TCP port 8080    
 ![2](https://user-images.githubusercontent.com/50557587/142726600-0ad35ae6-802a-4cb9-87a7-fa4fd1d97f28.PNG)
  
-- 
+- Perform initial jenkins set up `http://<Jenkins-Server-Public-IP-Address-or-Public-DNS-Name>:8080`
 
  
 
