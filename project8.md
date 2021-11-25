@@ -20,10 +20,12 @@
 ![p7](https://user-images.githubusercontent.com/50557587/142721133-e2dd2b97-c591-43c2-83db-fc90269f24cb.PNG)       
 ![p4](https://user-images.githubusercontent.com/50557587/142721149-b05dde6c-0df9-4d2c-95db-45bae6e80afc.PNG)
 
+- Restart apache2 and confirm status `sudo systemctl restart apache2`, `sudo systemctl status apache2`.
+
 - Verify that the configuration works `http://<Load-Balancer-Public-IP-Address-or-Public-DNS-Name>/index.php`.   
 ![p5](https://user-images.githubusercontent.com/50557587/142721211-4b48e8d5-b04f-41c9-b244-e34a38127614.PNG)
 
-- Unmount /var/log/httpd/ from the Web Servers to the NFS Server and make sure the Web Server has its own log directory.
+- Unmount /var/log/httpd/ from the Web Servers to the NFS Server `sudo umount -f /var/log/httpd` and make sure the Web Server has its own log directory
 - Enter the following command `sudo tail -f /var/log/httpd/access_log`
 
 ![p8](https://user-images.githubusercontent.com/50557587/142724995-ea8e93cf-27a2-4877-9679-13c3cd2b8e2d.PNG)
