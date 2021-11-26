@@ -89,7 +89,7 @@
 - Fork the tooling source code from https://github.com/darey-io/tooling to your Github account
 - Install git` sudo yum install git`.
 - Clone the directory `git clone https://github.com/Taiwolawal/tooling.git`, this will create a folder named tooling.
-- Deploy the content of the html folder of the Tooling directory to /var/www/html  `sudo cp -R tooling/html/. /var/www/html`.
+- Deploy the content of the html folder of the Tooling directory to /var/www/html  `sudo cp -R ~/tooling/html/. /var/www/html`.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
 -  Install mysql server `sudo yum install mysql-server`.
 - Edit functions.php `sudo vi /var/www/html/functions.php` and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
