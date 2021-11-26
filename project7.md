@@ -73,14 +73,14 @@
 - Repeat the steps above on the 2 Web Servers.
 - Verify that the Apache files and directories are available on the Web servers in /var/www are same on the NFS in /mnt/apps, if same files are showing, it means NFS mounted correctly.
 - Locate the log folder for Apache on the Web Server and mount it to NFS server's  export for log.
-- Since the log folder already contains some content we back-up that because if we mount on that directory we lose the content inside.
+- Since the log folder already contains some content we need to back it up because if we mount on that directory we lose the content inside.
 - Run command `sudo mv /var/log/httpd /var/log/httpd.bak`, this command renames the folder httpd to httpd.bak with the content still intact.
 - Create a new httpd folder `sudo mkdir /var/log/httpd` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/logs /var/log/httpd`.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/logs /var/log/http nfs defaults 0 0`.     
 ![p16](https://user-images.githubusercontent.com/50557587/142706687-aadec479-7a90-4146-8932-7f0b3df159ab.PNG)
 
 - Run `sudo systemctl daemon-reload` to update.
-- After mount ensure that the folder httpd is in `sudo chmod -R root:root /var/log/httpd` and `sudo chown -R 700 /var/log/httpd`.
+- After mount ensure that the folder httpd is in `sudo chown -R root:root /var/log/httpd` and `sudo chmod -R 700 /var/log/httpd`.
 - Copy the content of httpd.bak into httpd folder since mount has already taken place `sudo cp -R /var/log/httpd.bak/. /var/log/httpd`.
 - We can test the web page if it is displaying the test page.    
 ![test](https://user-images.githubusercontent.com/50557587/143228029-353c3f54-462a-4206-a0eb-7721e25c93d3.PNG)
@@ -91,14 +91,14 @@
 - Clone the directory `git clone https://github.com/Taiwolawal/tooling.git`, this will create a folder named tooling.
 - Deploy the content of the html folder of the Tooling directory to /var/www/html  `sudo cp -R tooling/html/. /var/www/html`.
 - Disable Apache default page `sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup` and restart httpd `sudo systemctl restart httpd`.
--  Install mysql server sudo yum install mysql-server.
+-  Install mysql server `sudo yum install mysql-server`.
 - Edit functions.php `sudo vi /var/www/html/functions.php` and enter database ip address "172.31.4.144", username "webaccess", password "ubuntu" and database name  "tooling". Check the screenshot below for the highlighted section.
 ![p18](https://user-images.githubusercontent.com/50557587/142719391-e1134d6a-5937-4885-a872-9f6a028d6bcf.PNG)
 
 -Install PHP.   
 ![php](https://user-images.githubusercontent.com/50557587/143293842-6f6e662e-152a-4165-9b68-d494995069dd.PNG)
 
-- Connect with the database `sudo mysql -h 172.31.4.144 -u tooling -p tooling < tooling-db.sql`.
+- Connect with the database `sudo mysql -h 172.31.4.144 -u webaccess -p tooling < tooling-db.sql`, this will take place in the tooling folder.
 - Launch all the public ip address of the the 3 Web Servers and you will get a login page.
 ![p19](https://user-images.githubusercontent.com/50557587/142719481-fe8cae50-7f60-4179-8832-0b879f596343.PNG)
 ![p20](https://user-images.githubusercontent.com/50557587/142719486-da85816e-a1ca-4cab-9f33-aee857fa2349.PNG)
