@@ -102,7 +102,10 @@
 - Launch all the public ip address of the the 3 Web Servers and you will get a login page.
 ![p19](https://user-images.githubusercontent.com/50557587/142719481-fe8cae50-7f60-4179-8832-0b879f596343.PNG)
 ![p20](https://user-images.githubusercontent.com/50557587/142719486-da85816e-a1ca-4cab-9f33-aee857fa2349.PNG)
-![p21](https://user-images.githubusercontent.com/50557587/142719488-72ba4e1c-1533-4e22-a396-f400d3353a17.PNG)
+![p21](https://user-images.githubusercontent.com/50557587/142719488-72ba4e1c-1533-4e22-a396-f400d3353a17.PNG)  
+
+- If the sites are not opening or seeing error 403 disable selinux `sudo vi /etc/sysconfig/selinux` and set SELINUX=disabled. Reboot the server `sudo reboot now`and confirm if selinux has been disabled run command `sestatus`
+
 
 - Project completed.
 
