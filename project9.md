@@ -59,7 +59,7 @@
 - If you want to apply some particular pattern to define which files to send - use this syntax.   
 ![j23](https://user-images.githubusercontent.com/50557587/143798579-fc3fe6bf-c2d8-41e5-834f-e0eda940d209.PNG)
 
-- Make changes in the readme.md file in the git account and confirm if it will sync along with jenkins and show in the server.    
+- Make changes in the README.MD file in the git account and confirm if it will sync along with jenkins and show in the NFS server.    
 ![git2](https://user-images.githubusercontent.com/50557587/143798923-4b973e98-ec44-47e8-92ad-648368ae2354.PNG) 
 
 - Below is the output from the NFS server, checking the README.MD file  
