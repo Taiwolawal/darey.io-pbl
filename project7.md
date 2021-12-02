@@ -1,5 +1,5 @@
 # Devops Tooling Website Solution
-- The task of the project is to implete a tooling website solution which makes access to Devops tools within the corporate infrastructure easily accessible.
+- The task of the project is to implement a tooling website solution which makes access to Devops tools within the corporate infrastructure easily accessible.
 - The project will implement a solution that consist of the following components:
 - i. Infrastructure: AWS
 - ii. Webserver Linux: Redhat Enterprise Linux 8
