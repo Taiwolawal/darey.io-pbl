@@ -1,7 +1,7 @@
 # Load Balancer Solution With Apache.
 - In project 7, we had 3 Web Servers with each having its own public ip address. 
-- A client has to access the site using different URLs , which is not a nice user experience. To hide all this complexity and have a single point of access with a single public IP address/name, a Load Balancer can be used.
-- A Load Balancer (LB) distributes client request among enderlying Web Servers and make sure that the load is distributed in a optimal way.   
+- A client will have to access the site using different URLs , which is not a nice user experience. To hide all this complexity and have a single point of access with a single public IP address/name, a Load Balancer can be used.
+- A Load Balancer (LB) distributes client request among underlying Web Servers and make sure that the load is distributed in a optimal way.   
 ![p2](https://user-images.githubusercontent.com/50557587/142720551-00010d9f-15f2-4c11-8e0d-59c814f4cc42.PNG)
 
 - The task of this project is to enhance out Tooling website solution by adding a Load Balancer to distribute traffic between Web Servers and allow users to access the website using a single URL.
