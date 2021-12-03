@@ -17,7 +17,7 @@
 
 ## Register A New Domain Name And Configure Secured Connection Using SSL/TLS Certificates.
 - Register a new domain name with any registrar of your choice in any domain zone (e.g. .com, .net, .org, .edu, .info, .xyz or any other).
-- Assign an Elastic IP to your Nginx LB server and associate your domain name with this Elastic IP, the purpose of this is to ensure that our public IP address is static because everytime you restart, stop or start your EC2 instance, you get a new public IP address. When you want to associate your domain name, it is better to have a static IP address that does not change after reboot, thus Elastic IP is the solution for this problem.
+- Assign an Elastic IP to your Nginx LB server and associate your domain name with this Elastic IP, the purpose of this is to ensure that the public IP address is static because everytime you restart, stop or start your EC2 instance, you get a new public IP address. When you want to associate your domain name, it is better to have a static IP address that does not change after reboot, thus Elastic IP is the solution for this problem.
 - Assign an Elastic IP to your Nginx LB server and associate your domain name with this Elastic IP address.   
 ![j5](https://user-images.githubusercontent.com/50557587/143793794-38316a7a-dd85-4f7b-9d63-63f23c9317d7.PNG)
 
