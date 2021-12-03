@@ -55,7 +55,7 @@
 - Save the configuration, open your Jenkins job/project configuration page and add another one “Post-build Action”.   
 ![j22](https://user-images.githubusercontent.com/50557587/143798513-cdb6e841-ee2b-4db2-8292-059beb78200d.PNG)
 
-- Configure it to send all files probuced by the build into our previouslys define remote directory. In our case we want to copy all files and directories - so we use "**".
+- Configure it to send all files produced by the build into our previouslys define remote directory. In our case we want to copy all files and directories - so we use "**".
 - If you want to apply some particular pattern to define which files to send - use this syntax.   
 ![j23](https://user-images.githubusercontent.com/50557587/143798579-fc3fe6bf-c2d8-41e5-834f-e0eda940d209.PNG)
 
