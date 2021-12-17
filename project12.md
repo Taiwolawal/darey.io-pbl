@@ -25,7 +25,7 @@
 ![5](https://user-images.githubusercontent.com/50557587/146607510-01338ddc-f28b-4e42-8ce9-ee5c52aef8cf.PNG)
 ![6](https://user-images.githubusercontent.com/50557587/146607523-5e57a41e-7ad0-44d5-9c00-83db1855cec3.PNG)
 
-## Step 2 -Refactor Ansible Code By Importing Other Playbooks Into site.yml
+## Step 2 - Refactor Ansible Code By Importing Other Playbooks Into site.yml
 - Before starting to refactor the codes, ensure that you have pulled down the latest code from master (main) branch, and creat a new branch, name it refactor. Let see code re-use in action by importing other playbooks
 - Within playbooks folder, create a new file and name it site.yml, this file will now be considered as an entry point into the entire infrastructure configuration. The site.yml will become a parent to all other playbooks that will be developed.
 - Create a new folder in root of the directory and name it static-assignment. The static-assignments folder is where all other children playbooks will be stored. This is merely for easy organization of your work. It is not an Ansible specific concept, therefore you can choose how you want to organize your work.
@@ -45,33 +45,50 @@
 ![9 5](https://user-images.githubusercontent.com/50557587/146610826-a79df255-e9ef-47ad-8bd8-2d39f8472171.PNG)
 ![9 6](https://user-images.githubusercontent.com/50557587/146610829-7ff49cef-6801-42fe-845f-2ba3fc428841.PNG)
 
-## Configure UAT Webservers with a role 'Webserver'
-
-
-
-
-
-
-
+## Step 3 - Configure UAT Webservers with a role 'Webserver'
+- Launch 2 EC2 instances using RHEL 8 image, we will use them as our uat servers, so give them names accordingly – Web1-UAT and Web2-UAT.  
 ![9 7](https://user-images.githubusercontent.com/50557587/146610834-0ea94848-d4d8-4c4c-992d-fa562053f0ba.PNG)
 
-
-
+- To create a role, you must create a directory called roles/, relative to the playbook file or in /etc/ansible/ directory.
+- Create a roles directory in the root, cd into the directory, use an Ansible utility called ansible-galaxy, `mkdir roles && cd roles && ansible-galaxy init webserver`.  
+- The entire folder structure should like below.     
 ![9 8](https://user-images.githubusercontent.com/50557587/146610840-6a955680-6912-4bd1-a044-18aaeaf9fdf7.PNG)
 
+- After removing unnecesary directories and files, the roles structure should look like this.         
+![10 0](https://user-images.githubusercontent.com/50557587/146610853-76308551-3418-4dfd-af10-2e3549780fe4.PNG)  
+![9 9](https://user-images.githubusercontent.com/50557587/146610849-b55f0fb3-c27c-48ae-980c-e62dfcee13b9.PNG)    
 
-![9 9](https://user-images.githubusercontent.com/50557587/146610849-b55f0fb3-c27c-48ae-980c-e62dfcee13b9.PNG)
+- Update the inventory ansible-config/inventory/uat.yml file with IP addresses of the 2 UAT Webservers.   
+![i](https://user-images.githubusercontent.com/50557587/146616805-08f86f59-ea54-4064-a50b-b11a8d764773.PNG)
 
-![10 0](https://user-images.githubusercontent.com/50557587/146610853-76308551-3418-4dfd-af10-2e3549780fe4.PNG)
+- In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path    = /home/ubuntu/ansible-config-mgt/roles, so Ansible could know where to find configured roles.  
+![10 1](https://user-images.githubusercontent.com/50557587/146616902-4273470c-29f5-4ca6-9015-54eb6d0a0b28.PNG)
 
+- It is time to start adding some logic to the webserver role. Go into tasks directory, and within the main.yml file, start writing configuration tasks to do the following.
+- Install and configure Apache (httpd service)
+Clone Tooling website from GitHub https://github.com/Taiwolawal/tooling.git.
+Ensure the tooling website code is deployed to /var/www/html on each of 2 UAT Web servers.
+Make sure httpd service is started
 
+-  The main.yml will consist of the following tasks.  
+![10 2](https://user-images.githubusercontent.com/50557587/146616927-4bcee5da-4238-4bf2-b46a-4a857545eab0.PNG)
 
+## Step 4 - Reference 'Webserver' role.
+- Within the static-assignments folder, create a new assignment for uat-webservers uat-webservers.yml. This is where you will reference the role.      
+![t](https://user-images.githubusercontent.com/50557587/146617608-bb1383d0-35ed-4944-91b5-71366315c73b.PNG)
 
+- Remember that the entry point to our ansible configuration is the site.yml file therefore , we need to refer uat-webservers.yml role inside site.yml. The site.yml will look like:         
+![vc](https://user-images.githubusercontent.com/50557587/146617614-4dceb523-f5c3-4e72-bfeb-7da98d944b24.PNG)
 
+## Step 5 - Commit & Test.
+- Commit your changes, create a Pull Request and merge them to master (main) branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your Jenkins-Ansible server into /home/ubuntu/ansible-config/ directory.
+- Now run the playbook against the uat inventory.   
+![10 3](https://user-images.githubusercontent.com/50557587/146616930-f25acccf-4e64-4c20-8ff2-a7eb2cab3791.PNG)
+![10 4](https://user-images.githubusercontent.com/50557587/146616942-9c41f5c4-f701-4c35-a735-9fbfa9ee3735.PNG)
+![10 5](https://user-images.githubusercontent.com/50557587/146616946-1cb8489f-0b9e-4299-9aac-f2b9ec984f4f.PNG)
 
+- You should be able to see both of the UAT Web servers configured and you can try to reach them from your browser: `http://<Web1-UAT-Server-Public-IP-or-Public-DNS-Name>/index.php`.
 
-
-
-
-- 
+- The Ansible architecture now looks like this:      
+![w](https://user-images.githubusercontent.com/50557587/146618308-2465389b-92e7-460e-b83e-d27ef39bb2a5.PNG)
 
