@@ -61,7 +61,7 @@
 - Update the inventory ansible-config/inventory/uat.yml file with IP addresses of the 2 UAT Webservers.   
 ![i](https://user-images.githubusercontent.com/50557587/146616805-08f86f59-ea54-4064-a50b-b11a8d764773.PNG)
 
-- In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path    = /home/ubuntu/ansible-config-mgt/roles, so Ansible could know where to find configured roles.  
+- In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path    = /home/ubuntu/ansible-config/roles, so Ansible could know where to find configured roles.  
 ![10 1](https://user-images.githubusercontent.com/50557587/146616902-4273470c-29f5-4ca6-9015-54eb6d0a0b28.PNG)
 
 - It is time to start adding some logic to the webserver role. Go into tasks directory, and within the main.yml file, start writing configuration tasks to do the following.
