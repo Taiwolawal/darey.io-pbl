@@ -360,13 +360,25 @@ Change bind-address = 0.0.0.0 and restart mysql `sudo systemctl restart mysql`.
 
 Create a new pipeline in blue ocean and link the php-todo git link to it, it will start building since there is a jenkinsfile in it.
 
-Ensure you install  mysql client on Jenkins `sudo apt install mysql`.
+Ensure you install  mysql client on Jenkins `sudo apt install mysql-client`.
 
-Connect to the database  
+In the .env.sample update the database connectivity requirements with the screenshot below. The IP address used is for the database.   
+![5 7](https://user-images.githubusercontent.com/50557587/149632012-5b8bc5cc-0412-4a8d-b48f-ef07902d1e66.PNG) 
+
+Connect to the database from Jenkins mysql -h 172.31.1.102 -u homestead -p
 ![5 6](https://user-images.githubusercontent.com/50557587/149632011-32a4ee8a-25a1-4980-a961-62b1ad040963.PNG)
 
-In the .env.sample update the content with the screenshot below. The IP address used is for the Jenkins  
-![5 7](https://user-images.githubusercontent.com/50557587/149632012-5b8bc5cc-0412-4a8d-b48f-ef07902d1e66.PNG)   
+Push the code in php-todo folder
+
+Update the Jenkinsfile to include Unit tests step.
+```
+ stage('Execute Unit Tests') {
+  steps {
+     sh './vendor/bin/phpunit'
+  } 
+```
+ 
+  
 ![5 8](https://user-images.githubusercontent.com/50557587/149632014-17f55fd3-a154-4a26-88a5-bb1044d91275.PNG)   
 ![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG)  
 ![6 0](https://user-images.githubusercontent.com/50557587/149632016-ace8004c-4602-46b9-bf20-4d72b4339bd2.PNG)   
