@@ -184,7 +184,7 @@ pipeline {
 
       stage('Checkout SCM') {
          steps{
-            git branch: 'main', url: 'https://github.com/Taiwolawal/ansible-config.git'
+            git branch: 'feature/jenkinspipeline-stages', url: 'https://github.com/Taiwolawal/ansible-config.git'
          }
        }
 
@@ -253,6 +253,9 @@ On the Jenkins server, install PHP, its dependencies and Composer tool
 sudo php /tmp/composer-setup.php
 sudo mv composer.phar /usr/bin/composer`
 
+![4 8](https://user-images.githubusercontent.com/50557587/149627853-d58502aa-96fb-4044-9686-d2a2f94a11cd.PNG)
+![4 9](https://user-images.githubusercontent.com/50557587/149627858-c61fae47-f498-4168-9ef2-2e999fb7ec3d.PNG)
+
 Install Plot Plugin and Artifactory plugin in the Jenkins UI (Manage Jenkins)
 
 We will use plot plugin to display tests reports, and code coverage information and the Artifactory plugin will be used to easily upload code artifacts into an Artifactory server.
@@ -261,14 +264,113 @@ Create an instance for Artifactory, the minimum requirement is 4GB RAM and 2 vCP
 
 Copy the ip address into inventory/ci enviroment and configure all settings in the playbook/site.yml , roles and static assignment so as to install Artifactory.
 
-Push code with all the changes done and merge with main. Swith to the main  branch
+Push code with all the changes done and merge with main. Swith to the main  branch.
+
+Edit the Jenkinfile with regards the git branch to main and push code
+
+```
+stage('Checkout SCM') {
+         steps{
+            git branch: 'main', url: 'https://github.com/Taiwolawal/ansible-config.git'
+         }
+       }
+ ```
+ 
+ In Jenkins, go to the main branch and  click on Build Parameters and change to ci as such always change the inventory path in Jenkins dashboard.
+
+![5 1](https://user-images.githubusercontent.com/50557587/149631997-5cbb54df-7115-4be6-bdfc-c78d0165d48b.PNG)
 
 
+ 
 
-![4 8](https://user-images.githubusercontent.com/50557587/149627853-d58502aa-96fb-4044-9686-d2a2f94a11cd.PNG)
-![4 9](https://user-images.githubusercontent.com/50557587/149627858-c61fae47-f498-4168-9ef2-2e999fb7ec3d.PNG)
-![5 0](https://user-images.githubusercontent.com/50557587/149627860-bc19dc3a-a04d-4761-b263-bc812e1e0a7a.PNG)
+Login into the Artifactory with port 8081 and enter username and password (admin, password), create new password
 
+Create repository -> Select Package Type -> Generic, enter Repository Key as PBL, save and finish. 
+
+![image](https://user-images.githubusercontent.com/50557587/149633230-ba95dab0-1e85-469d-84cd-e0e585edcc87.png)
+
+Configure the server ID, URL and Credentials, run Test Connection.  
+![5 2](https://user-images.githubusercontent.com/50557587/149631999-60b3d0e3-6989-48db-bc35-f059c501c45a.PNG)
+
+##Integrate Artifactory repository with Jenkins.
+
+Create a Jenkinsfile in the php-todo folder, and copy the content below.
+
+```
+pipeline {
+    agent any
+
+  stages {
+
+     stage("Initial cleanup") {
+          steps {
+            dir("${WORKSPACE}") {
+              deleteDir()
+            }
+          }
+        }
+
+    stage('Checkout SCM') {
+      steps {
+            git branch: 'main', url: 'hhttps://github.com/Taiwolawal/php-todo.git'
+      }
+    }
+
+    stage('Prepare Dependencies') {
+      steps {
+             sh 'mv .env.sample .env'
+             sh 'composer install'
+             sh 'php artisan migrate'
+             sh 'php artisan db:seed'
+             sh 'php artisan key:generate'
+      }
+    }
+  }
+}
+```
+
+On the database server, create database and user, the content below should be updated in the mysql roles (roles -> mysql -> defaults -> main.yml)
+
+```
+Create database homestead;
+CREATE USER 'homestead'@'%' IDENTIFIED BY 'sePret^i';
+GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%';
+```
+
+Ensure the Ip address used in the database is the ip for Jenkins server
+
+![5 3](https://user-images.githubusercontent.com/50557587/149632000-f7f04d7f-bdd2-44e3-8891-82b31d4e1d57.PNG)
+![5 4](https://user-images.githubusercontent.com/50557587/149632002-d71eb1d3-7401-488a-a115-6cd22db05e6f.PNG)
+
+Push the code and build (it should be done in the php-todo folder), ensure the parameter is in dev.   
+![5 5](https://user-images.githubusercontent.com/50557587/149633665-7ba008ab-5aa2-46d4-b786-6e17376b87a4.PNG)
+
+To be sure if the database were created, launch the db (mysql-server) instance and confirm. 
+
+```
+sudo mysql 
+show databases;
+select user, host from mysql.user;
+```
+
+Set the bind address of the database of the MYSQL server to allow connections from remote hosts. 
+`sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf `
+
+Change bind-address = 0.0.0.0 and restart mysql `sudo systemctl restart mysql`.
+
+Create a new pipeline in blue ocean and link the php-todo git link to it, it will start building since there is a jenkinsfile in it.
+
+Ensure you install  mysql client on Jenkins `sudo apt install mysql`.
+
+Connect to the database  
+![5 6](https://user-images.githubusercontent.com/50557587/149632011-32a4ee8a-25a1-4980-a961-62b1ad040963.PNG)
+
+In the .env.sample update the content with the screenshot below. The IP address used is for the Jenkins  
+![5 7](https://user-images.githubusercontent.com/50557587/149632012-5b8bc5cc-0412-4a8d-b48f-ef07902d1e66.PNG)   
+![5 8](https://user-images.githubusercontent.com/50557587/149632014-17f55fd3-a154-4a26-88a5-bb1044d91275.PNG)   
+![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG)  
+![6 0](https://user-images.githubusercontent.com/50557587/149632016-ace8004c-4602-46b9-bf20-4d72b4339bd2.PNG)   
+-images.githubusercontent.com/50557587/149632004-a76a5ba9-e8a1-4792-bcd5-e0f43c3ecc50.PNG)
 
 
 
