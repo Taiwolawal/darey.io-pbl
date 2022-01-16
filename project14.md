@@ -388,7 +388,8 @@ stage('Code Analysis') {
     }
 ```
 
-Plot the data using the plot Jenkins plugin.
+Plot the data using the plot Jenkins plugin.   
+![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG) 
   
 
 Bundle the application code for into an artifact (archived package) upload to Artifactory, but ensure you install zip `sudo apt install zip -y`. You can only deploy to artifactory, if a unit test has been done on it. Publish the result artifact into Artifactory.
@@ -534,28 +535,9 @@ We will update the Jenkinsfile with
             }
         }
     }
-`````
-
-
-
-  
-![5 8](https://user-images.githubusercontent.com/50557587/149632014-17f55fd3-a154-4a26-88a5-bb1044d91275.PNG)   
-![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG)  
-   
-
-
-
-
-
+`````    
 ![6 5](https://user-images.githubusercontent.com/50557587/149654670-a7982644-687d-429a-966a-9d986c3091c0.PNG)
-
 ![image](https://user-images.githubusercontent.com/50557587/149658973-fe43ddbf-8ed1-41de-993c-ccf6d240e029.png)
-
-
-
-
-
-
 ![6 6](https://user-images.githubusercontent.com/50557587/149657508-d648542d-b8e8-4332-b553-66c5f8b49e7c.PNG)
 
 
