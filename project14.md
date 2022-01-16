@@ -245,6 +245,11 @@ Merge code with the main branch and the branch will have "Build with Parameters"
 ![4 7](https://user-images.githubusercontent.com/50557587/149627850-97ce6108-6eee-476f-926d-e95580aa72d4.PNG)
 
 ## CI/CD PIPELINE FOR TODO APPLICATION
+
+- Prepare Jenkins 
+
+Our goal here is to deploy the application onto servers directly from Artifactory rather than from git.  Here we will introduce another PHP application to add to the list of software products we are managing in our infrastructure.
+
 Fork and clone `https://github.com/darey-devops/php-todo.git` to our instance outside the ansible-config folder.
 
 On the Jenkins server, install PHP, its dependencies and Composer tool
@@ -280,9 +285,6 @@ stage('Checkout SCM') {
 
 ![5 1](https://user-images.githubusercontent.com/50557587/149631997-5cbb54df-7115-4be6-bdfc-c78d0165d48b.PNG)
 
-
- 
-
 Login into the Artifactory with port 8081 and enter username and password (admin, password), create new password
 
 Create repository -> Select Package Type -> Generic, enter Repository Key as PBL, save and finish. 
@@ -292,7 +294,9 @@ Create repository -> Select Package Type -> Generic, enter Repository Key as PBL
 Configure the server ID, URL and Credentials, run Test Connection.  
 ![5 2](https://user-images.githubusercontent.com/50557587/149631999-60b3d0e3-6989-48db-bc35-f059c501c45a.PNG)
 
-##Integrate Artifactory repository with Jenkins.
+The steps above are for setting up and installation of Artifactory.
+
+- Integrate Artifactory repository with Jenkins.
 
 Create a Jenkinsfile in the php-todo folder, and copy the content below.
 
@@ -312,7 +316,7 @@ pipeline {
 
     stage('Checkout SCM') {
       steps {
-            git branch: 'main', url: 'hhttps://github.com/Taiwolawal/php-todo.git'
+            git branch: 'main', url: 'https://github.com/Taiwolawal/php-todo.git'
       }
     }
 
@@ -330,12 +334,6 @@ pipeline {
 ```
 
 On the database server, create database and user, the content below should be updated in the mysql roles (roles -> mysql -> defaults -> main.yml)
-
-```
-Create database homestead;
-CREATE USER 'homestead'@'%' IDENTIFIED BY 'sePret^i';
-GRANT ALL PRIVILEGES ON * . * TO 'homestead'@'%';
-```
 
 Ensure the Ip address used in the database is the ip for Jenkins server
 
@@ -377,18 +375,120 @@ Update the Jenkinsfile to include Unit tests step.
      sh './vendor/bin/phpunit'
   } 
 ```
+
+- Code Quality Analysis
+
+This is one of the areas where developers, architects and many stakeholders are mostly interested in as far as product development is concerned. For PHP the most commonly tool used for code quality analysis is phploc.
+
+Install phploc `sudo apt-get install -y phploc`
+
+```
+stage('Code Analysis') {
+      steps {
+        sh 'phploc app/ --log-csv build/logs/phploc.csv'
+      }
+    }
+```
+
+Plot the data using the plot Jenkins plugin.
+  
+
+Bundle the application code for into an artifact (archived package) upload to Artifactory, but ensure you install zip `sudo apt install zip -y`. You can only deploy to artifactory, if a unit test has been done on it. Publish the result artifact into Artifactory.
+
+```
+stage ('Package Artifact') {
+      steps {
+          sh 'zip -qr php-todo.zip ${WORKSPACE}/*'
+      }
+    }
+    
+ stage ('Upload Artifact to Artifactory') {
+      steps {
+        script { 
+          def server = Artifactory.server 'artifactory-server'                 
+          def uploadSpec = """{
+                    "files": [
+                      {
+                       "pattern": "php-todo.zip",
+                       "target": "PBL/php-todo",
+                       "props": "type=zip;status=ready"
+                       }
+                    ]
+                 }""" 
+
+          server.upload spec: uploadSpec
+        }
+      }
+  
+    }
+ ```
+Deploy the artifact to the dev environment by launching Ansible pipeline, we are deploying it to ansible-config/main repository. We need to ensure that todo server details are already in the inventory/dev and updated in playbook/site.yml
+
+```
+stage ('Deploy to Dev Environment') {
+      steps {
+        build job: 'ansible-config/main', parameters: [[$class: 'StringParameterValue', name: 'env', value: 'dev']], propagate: false, wait: true
+      }
+    }
+ ```
  
+ Push codes from php-todo repository so as to deploy, to ensure artifact is download as stated in the deployment.yml, ensure you get password generated  from the Artifactory server. 
+ 
+To get the password, click Set Me Up and enter default password. 
+![image](https://user-images.githubusercontent.com/50557587/149657158-faf9f2a5-2fbd-426e-b754-f04663593d92.png)  
+![image](https://user-images.githubusercontent.com/50557587/149657183-be09196c-22af-4228-a050-2d26f6103f95.png)
+
+ Even though we have implemented Unit Tests and Code Coverage Analysis with phpunit and phploc, we still need to implement Quality Gate to ensure that ONLY code with the required code coverage, and other quality standards make it through to the environments.
+
+To achieve this, we need to configure SonarQube – An open-source platform developed by SonarSource for continuous inspection of code quality to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities.
+
+## SonarQube
+
+Create a role for sonarqube via ansible galaxy for installation of Sonarqube.
+
+Create an instance for Sonarqube and update the Ip details in ansible-config inventory/ci and site.yml for complete installation.
+
+Push the code and run from the build , change parameter to CI, some bugs came with the screeshot below, so we had to run ansible via command line.
+
+To run the command we need to update the roles_path in ansible.cfg located in the deploy folder, just for the purpose of the Sonarqube installation `roles_path=/home/ubuntu/ansible-config/roles`.
+
+After updating the roles_path in the ansible.cfg, enter the following command in the terminal:
+`export ANSIBLE_CONFIG=/home/ubuntu/ansible-config/deploy/ansible.cfg`
+
+Before running ansible-playbook ensure the ansible machine can talk to the server via SSH agent, by confirming `ssh-add -l`.
+
+Run ansible-playbook `ansible-playbook -i inventory/ci playbooks/site.yml`.
+
+Connect to instance via port 9000, password and username is both admin
+
+Install
+
+
+![image](https://user-images.githubusercontent.com/50557587/149657046-8eeae283-d63b-4b2e-b53d-073d17265b62.png)
+
   
 ![5 8](https://user-images.githubusercontent.com/50557587/149632014-17f55fd3-a154-4a26-88a5-bb1044d91275.PNG)   
 ![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG)  
 ![6 0](https://user-images.githubusercontent.com/50557587/149632016-ace8004c-4602-46b9-bf20-4d72b4339bd2.PNG)   
--images.githubusercontent.com/50557587/149632004-a76a5ba9-e8a1-4792-bcd5-e0f43c3ecc50.PNG)
+
+
+
+![6 1](https://user-images.githubusercontent.com/50557587/149654661-47b6a3f2-9c7d-499b-b441-70f1a6adea39.PNG)
+![6 2](https://user-images.githubusercontent.com/50557587/149654664-091e5aee-a6a8-4941-bf38-e273f3524ef8.PNG)
+![6 3](https://user-images.githubusercontent.com/50557587/149654666-6a20bd94-2259-4953-98b3-fc62aa6541db.PNG)
+![6 4](https://user-images.githubusercontent.com/50557587/149654669-248eaa90-2b9e-40a0-af30-90e420eeedf5.PNG)
+![6 5](https://user-images.githubusercontent.com/50557587/149654670-a7982644-687d-429a-966a-9d986c3091c0.PNG)
 
 
 
 
 
+![6 6](https://user-images.githubusercontent.com/50557587/149657508-d648542d-b8e8-4332-b553-66c5f8b49e7c.PNG)
 
+![image](https://user-images.githubusercontent.com/50557587/149658088-b63b3f96-bcde-40e0-825c-468a8286eea8.png)
+![image](https://user-images.githubusercontent.com/50557587/149658098-5b3b35d4-b986-4a78-a394-ef554afa5437.png)
+![image](https://user-images.githubusercontent.com/50557587/149658109-f92cf739-4bd9-4c2b-a6e6-c685a8b90f79.png)
+![image](https://user-images.githubusercontent.com/50557587/149658127-92020e75-a2bb-4d78-a25e-7d7ab678e1a4.png)
 
 
 
