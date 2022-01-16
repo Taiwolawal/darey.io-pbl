@@ -461,8 +461,75 @@ Run ansible-playbook `ansible-playbook -i inventory/ci playbooks/site.yml`.
 
 Connect to instance via port 9000, password and username is both admin
 
-Install
+In Jenkins, install SonarScanner plugin. Navigate to configure system in Jenkins. Add SonarQube server as shown below:  
+![image](https://user-images.githubusercontent.com/50557587/149658088-b63b3f96-bcde-40e0-825c-468a8286eea8.png)
 
+Generate authentication token in SonarQube
+![image](https://user-images.githubusercontent.com/50557587/149658098-5b3b35d4-b986-4a78-a394-ef554afa5437.png)
+
+Configure Quality Gate Jenkins Webhook in SonarQube – The URL should point to your Jenkins server http://{JENKINS_HOST}/sonarqube-webhook/  
+![image](https://user-images.githubusercontent.com/50557587/149658109-f92cf739-4bd9-4c2b-a6e6-c685a8b90f79.png)
+
+Setup SonarQube scanner from Jenkins – Global Tool Configuration
+![image](https://user-images.githubusercontent.com/50557587/149658127-92020e75-a2bb-4d78-a25e-7d7ab678e1a4.png)
+
+Update Jenkins Pipeline to include SonarQube scanning and Quality Gate, it should be placed before "Package Artifact".
+
+````
+stage('SonarQube Quality Gate') {
+      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
+        environment {
+          scannerHome = tool 'SonarQubeScanner'
+        }
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            }
+            timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+ ````
+ 
+ We have to update `sonar-scanner.properties` for the build to work:
+ 
+ ```
+ cd /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/conf/
+ sudo vi sonar-scanner.properties
+ ```
+Add configuration related to php-todo project
+
+```
+sonar.host.url=http://<SonarQube-Server-IP-address>:9000
+sonar.projectKey=php-todo
+#----- Default source code encoding
+sonar.sourceEncoding=UTF-8
+sonar.php.exclusions=**/vendor/**
+sonar.php.coverage.reportPaths=build/logs/clover.xml
+sonar.php.tests.reportPath=build/logs/junit.xml
+```
+
+In Sonarqube stage, it has some bugs, bad coverage and code smells as such, we do not want it to be pushed to any environment. 
+
+We will update the Jenkinsfile with
+
+```
+ stage('SonarQube Quality Gate') {
+      when { branch pattern: "^develop*|^hotfix*|^release*|^main*", comparator: "REGEXP"}
+        environment {
+            scannerHome = tool 'SonarQubeScanner'
+        }
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh "${scannerHome}/bin/sonar-scanner -Dproject.settings=sonar-project.properties"
+            }
+            timeout(time: 1, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+    }
+`````
 
 ![image](https://user-images.githubusercontent.com/50557587/149657046-8eeae283-d63b-4b2e-b53d-073d17265b62.png)
 
@@ -479,16 +546,16 @@ Install
 ![6 4](https://user-images.githubusercontent.com/50557587/149654669-248eaa90-2b9e-40a0-af30-90e420eeedf5.PNG)
 ![6 5](https://user-images.githubusercontent.com/50557587/149654670-a7982644-687d-429a-966a-9d986c3091c0.PNG)
 
+![image](https://user-images.githubusercontent.com/50557587/149658973-fe43ddbf-8ed1-41de-993c-ccf6d240e029.png)
+
+
 
 
 
 
 ![6 6](https://user-images.githubusercontent.com/50557587/149657508-d648542d-b8e8-4332-b553-66c5f8b49e7c.PNG)
 
-![image](https://user-images.githubusercontent.com/50557587/149658088-b63b3f96-bcde-40e0-825c-468a8286eea8.png)
-![image](https://user-images.githubusercontent.com/50557587/149658098-5b3b35d4-b986-4a78-a394-ef554afa5437.png)
-![image](https://user-images.githubusercontent.com/50557587/149658109-f92cf739-4bd9-4c2b-a6e6-c685a8b90f79.png)
-![image](https://user-images.githubusercontent.com/50557587/149658127-92020e75-a2bb-4d78-a25e-7d7ab678e1a4.png)
+
 
 
 
