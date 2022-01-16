@@ -420,6 +420,8 @@ stage ('Package Artifact') {
   
     }
  ```
+ ![6 0](https://user-images.githubusercontent.com/50557587/149632016-ace8004c-4602-46b9-bf20-4d72b4339bd2.PNG)
+ 
 Deploy the artifact to the dev environment by launching Ansible pipeline, we are deploying it to ansible-config/main repository. We need to ensure that todo server details are already in the inventory/dev and updated in playbook/site.yml
 
 ```
@@ -435,6 +437,7 @@ stage ('Deploy to Dev Environment') {
 To get the password, click Set Me Up and enter default password. 
 ![image](https://user-images.githubusercontent.com/50557587/149657158-faf9f2a5-2fbd-426e-b754-f04663593d92.png)  
 ![image](https://user-images.githubusercontent.com/50557587/149657183-be09196c-22af-4228-a050-2d26f6103f95.png)
+![image](https://user-images.githubusercontent.com/50557587/149657046-8eeae283-d63b-4b2e-b53d-073d17265b62.png)
 
  Even though we have implemented Unit Tests and Code Coverage Analysis with phpunit and phploc, we still need to implement Quality Gate to ensure that ONLY code with the required code coverage, and other quality standards make it through to the environments.
 
@@ -460,7 +463,8 @@ Run ansible-playbook `ansible-playbook -i inventory/ci playbooks/site.yml`.
 ![6 2](https://user-images.githubusercontent.com/50557587/149654664-091e5aee-a6a8-4941-bf38-e273f3524ef8.PNG)
 ![6 3](https://user-images.githubusercontent.com/50557587/149654666-6a20bd94-2259-4953-98b3-fc62aa6541db.PNG)
 
-Connect to instance via port 9000, password and username is both admin
+Connect to instance via port 9000, password and username is both admin.  
+![6 4](https://user-images.githubusercontent.com/50557587/149654669-248eaa90-2b9e-40a0-af30-90e420eeedf5.PNG)
 
 In Jenkins, install SonarScanner plugin. Navigate to configure system in Jenkins. Add SonarQube server as shown below:  
 ![image](https://user-images.githubusercontent.com/50557587/149658088-b63b3f96-bcde-40e0-825c-468a8286eea8.png)
@@ -532,17 +536,17 @@ We will update the Jenkinsfile with
     }
 `````
 
-![image](https://user-images.githubusercontent.com/50557587/149657046-8eeae283-d63b-4b2e-b53d-073d17265b62.png)
+
 
   
 ![5 8](https://user-images.githubusercontent.com/50557587/149632014-17f55fd3-a154-4a26-88a5-bb1044d91275.PNG)   
 ![5 9](https://user-images.githubusercontent.com/50557587/149632015-8f9cbe1e-dfe5-4a7c-b8c2-7e9808180bc2.PNG)  
-![6 0](https://user-images.githubusercontent.com/50557587/149632016-ace8004c-4602-46b9-bf20-4d72b4339bd2.PNG)   
+   
 
 
 
 
-![6 4](https://user-images.githubusercontent.com/50557587/149654669-248eaa90-2b9e-40a0-af30-90e420eeedf5.PNG)
+
 ![6 5](https://user-images.githubusercontent.com/50557587/149654670-a7982644-687d-429a-966a-9d986c3091c0.PNG)
 
 ![image](https://user-images.githubusercontent.com/50557587/149658973-fe43ddbf-8ed1-41de-993c-ccf6d240e029.png)
