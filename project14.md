@@ -261,15 +261,13 @@ sudo mv composer.phar /usr/bin/composer`
 ![4 8](https://user-images.githubusercontent.com/50557587/149627853-d58502aa-96fb-4044-9686-d2a2f94a11cd.PNG)
 ![4 9](https://user-images.githubusercontent.com/50557587/149627858-c61fae47-f498-4168-9ef2-2e999fb7ec3d.PNG)
 
-Install Plot Plugin and Artifactory plugin in the Jenkins UI (Manage Jenkins)
+- Install Plot Plugin and Artifactory plugin in the Jenkins UI (Manage Jenkins)
 
 We will use plot plugin to display tests reports, and code coverage information and the Artifactory plugin will be used to easily upload code artifacts into an Artifactory server.
 
-Create an instance for Artifactory, the minimum requirement is 4GB RAM and 2 vCPUs.
+Create an instance for Artifactory.
 
 Copy the ip address into inventory/ci enviroment and configure all settings in the playbook/site.yml , roles and static assignment so as to install Artifactory.
-
-Push code with all the changes done and merge with main. Swith to the main  branch.
 
 Edit the Jenkinfile with regards the git branch to main and push code
 
@@ -446,9 +444,10 @@ To achieve this, we need to configure SonarQube – An open-source platform deve
 
 Create a role for sonarqube via ansible galaxy for installation of Sonarqube.
 
-Create an instance for Sonarqube and update the Ip details in ansible-config inventory/ci and site.yml for complete installation.
+Create an instance for Sonarqube, the minimum requirement is 4GB RAM and 2 vCPUs and update the Ip details in ansible-config inventory/ci and site.yml for complete installation.
 
-Push the code and run from the build , change parameter to CI, some bugs came with the screeshot below, so we had to run ansible via command line.
+Push the code and run from the build , change parameter to CI, some bugs came with the screeshot below, so we had to run ansible via command line.  
+![6 1](https://user-images.githubusercontent.com/50557587/149654661-47b6a3f2-9c7d-499b-b441-70f1a6adea39.PNG)
 
 To run the command we need to update the roles_path in ansible.cfg located in the deploy folder, just for the purpose of the Sonarqube installation `roles_path=/home/ubuntu/ansible-config/roles`.
 
@@ -457,7 +456,9 @@ After updating the roles_path in the ansible.cfg, enter the following command in
 
 Before running ansible-playbook ensure the ansible machine can talk to the server via SSH agent, by confirming `ssh-add -l`.
 
-Run ansible-playbook `ansible-playbook -i inventory/ci playbooks/site.yml`.
+Run ansible-playbook `ansible-playbook -i inventory/ci playbooks/site.yml`.  
+![6 2](https://user-images.githubusercontent.com/50557587/149654664-091e5aee-a6a8-4941-bf38-e273f3524ef8.PNG)
+![6 3](https://user-images.githubusercontent.com/50557587/149654666-6a20bd94-2259-4953-98b3-fc62aa6541db.PNG)
 
 Connect to instance via port 9000, password and username is both admin
 
@@ -540,9 +541,7 @@ We will update the Jenkinsfile with
 
 
 
-![6 1](https://user-images.githubusercontent.com/50557587/149654661-47b6a3f2-9c7d-499b-b441-70f1a6adea39.PNG)
-![6 2](https://user-images.githubusercontent.com/50557587/149654664-091e5aee-a6a8-4941-bf38-e273f3524ef8.PNG)
-![6 3](https://user-images.githubusercontent.com/50557587/149654666-6a20bd94-2259-4953-98b3-fc62aa6541db.PNG)
+
 ![6 4](https://user-images.githubusercontent.com/50557587/149654669-248eaa90-2b9e-40a0-af30-90e420eeedf5.PNG)
 ![6 5](https://user-images.githubusercontent.com/50557587/149654670-a7982644-687d-429a-966a-9d986c3091c0.PNG)
 
