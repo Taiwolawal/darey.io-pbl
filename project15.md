@@ -38,9 +38,24 @@ CREATE ACCESS POINTS
 ![image](https://user-images.githubusercontent.com/50557587/150148559-419b7ae8-44e3-4cef-826d-107ab86e2cff.png)
 
 
-create rds  
+create rds  (kms key & Subnet group)
 ![image](https://user-images.githubusercontent.com/50557587/150149517-9d308809-9f54-4a60-afa3-a3f8fa6c0bf0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150149821-798e0478-d061-4ca0-aa65-c8d842f99733.png)
+![image](https://user-images.githubusercontent.com/50557587/150167610-6e078e4f-65a6-4efd-b003-b71cde1b4882.png)
+![image](https://user-images.githubusercontent.com/50557587/150168567-8b6cdcfc-1759-4122-9a33-bb2fd21fde12.png)
+![image](https://user-images.githubusercontent.com/50557587/150169001-f2d1844e-da3f-4ae1-bb6d-e12906eb4a02.png)
+![image](https://user-images.githubusercontent.com/50557587/150169138-f7a6ea7d-716b-4370-b94b-9b30bc030596.png)
+
+database
+![image](https://user-images.githubusercontent.com/50557587/150170525-f646b2b0-8ed9-4612-a0fe-5533f9a346cf.png)
+![image](https://user-images.githubusercontent.com/50557587/150170641-246f331e-f438-4401-a42a-dc19b4df8baf.png)
+![image](https://user-images.githubusercontent.com/50557587/150170744-3eefb5da-e6af-4ee2-b419-9ad28748e66b.png)
+![image](https://user-images.githubusercontent.com/50557587/150170847-1563e4d3-ff3d-40c0-9983-5874e011d038.png)
+![image](https://user-images.githubusercontent.com/50557587/150170997-f8067b22-4458-4c11-90f1-63ab62a4dad6.png)
+
+Create Autoscaling group.
+
+
 
 
 
