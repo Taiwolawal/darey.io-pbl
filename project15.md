@@ -128,6 +128,53 @@ Create Target groups for Nginx, Worpress and Tooling.
 ![image](https://user-images.githubusercontent.com/50557587/150360778-fc602208-9c08-45cf-baed-eaef01e3b7f1.png)
 
 Create Load Balancers
+External Load Balancer.  
+![image](https://user-images.githubusercontent.com/50557587/150383384-81c3f79c-1c1b-4197-b2d5-1ee05f57966f.png)
+![image](https://user-images.githubusercontent.com/50557587/150383582-41c8c716-a1b2-48d9-85e6-197d3496f8b1.png)
+![image](https://user-images.githubusercontent.com/50557587/150383696-a73e2b9f-0520-4e1c-b761-04194234fad0.png)
+![image](https://user-images.githubusercontent.com/50557587/150383769-65ce600e-60a1-42f4-933b-48a3a632b662.png)
+![image](https://user-images.githubusercontent.com/50557587/150384013-c1ae7e68-e560-4506-92f1-24b61e51b421.png)
+
+Internal Load Balancer    
+![image](https://user-images.githubusercontent.com/50557587/150384659-1ed2c6bc-b822-4a99-a1ac-8cb4cb999746.png)
+![image](https://user-images.githubusercontent.com/50557587/150384749-5bcbd443-8cd6-4388-808d-10554c1ccf8b.png)
+![image](https://user-images.githubusercontent.com/50557587/150384879-46ac493b-fe20-4246-ae15-1ac390aabe7a.png)
+![image](https://user-images.githubusercontent.com/50557587/150384984-54ce230b-a9d6-4b83-b92c-cd3808dbb1d3.png)
+
+
+Select internal load balancer and click on listeners, from the screenshot, it could be depicted that every traffic that comes into the load balancer forwards to Wordpress target.
+![image](https://user-images.githubusercontent.com/50557587/150385555-c58d8a53-9767-4944-a8ca-248f7973a269.png)
+
+We can configure a rule so that we can cache tooling request and forward to the tooling target
+![image](https://user-images.githubusercontent.com/50557587/150386415-c7120a4c-9dc6-4874-b781-a4e3003219ac.png)
+![image](https://user-images.githubusercontent.com/50557587/150386929-ae4b7310-4b2a-42ad-b3cb-acc6d80ef3c7.png)
+
+Create launch templates (Bastion, Nginx, .  
+![image](https://user-images.githubusercontent.com/50557587/150390913-b00794e2-f633-47bc-9a9a-9a587b1d4d26.png)
+![image](https://user-images.githubusercontent.com/50557587/150392726-19175cec-bb25-43e8-9f3b-14dd496fe978.png)
+![image](https://user-images.githubusercontent.com/50557587/150392902-7abfad14-faf7-4a69-9e40-49a4b2338881.png)
+![image](https://user-images.githubusercontent.com/50557587/150392968-d16e946d-f962-4d1d-9e53-7a2561106152.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
