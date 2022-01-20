@@ -149,11 +149,29 @@ We can configure a rule so that we can cache tooling request and forward to the 
 ![image](https://user-images.githubusercontent.com/50557587/150386415-c7120a4c-9dc6-4874-b781-a4e3003219ac.png)
 ![image](https://user-images.githubusercontent.com/50557587/150386929-ae4b7310-4b2a-42ad-b3cb-acc6d80ef3c7.png)
 
-Create launch templates (Bastion, Nginx, .  
+Create launch templates (Bastion, Nginx, Wordpress).  
 ![image](https://user-images.githubusercontent.com/50557587/150390913-b00794e2-f633-47bc-9a9a-9a587b1d4d26.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392726-19175cec-bb25-43e8-9f3b-14dd496fe978.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392902-7abfad14-faf7-4a69-9e40-49a4b2338881.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392968-d16e946d-f962-4d1d-9e53-7a2561106152.png)
+
+Apply the same setting for Nginx, the major difference is the userdata input  
+![image](https://user-images.githubusercontent.com/50557587/150422434-c2f40b05-d048-4621-a3cc-810bcfccf8b8.png)
+
+We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file.  
+![image](https://user-images.githubusercontent.com/50557587/150424426-26df8814-98fe-4b35-b4fb-43336183fca1.png)
+
+
+Update the mount point to the file system
+`sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/`  
+![image](https://user-images.githubusercontent.com/50557587/150426608-2b90d1fc-62d7-44da-b724-88121304f7c1.png)
+![image](https://user-images.githubusercontent.com/50557587/150427269-dd082338-1c79-4d3e-bc82-958f59669ee9.png)
+
+
+
+
+
+
 
 
 
