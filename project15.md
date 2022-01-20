@@ -63,6 +63,103 @@ database
 
 Create Autoscaling group.
 
+Bastion
+```
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+yum install wget vim python3 telnet htop git mysql net-tools chrony -y
+systemctl start chronyd
+systemctl enable chronyd
+```
+
+Needed so that our servers can function properly on the redhat instance
+setsebool -P httpd_can_network_connect=1
+setsebool -P httpd_can_network_connect_db=1
+setsebool -P httpd_execmem=1
+setsebool -P httpd_use_nfs 1
+
+Amazon efs utils
+```
+git clone https://github.com/aws/efs-utils
+cd efs-utils
+yum install -y make
+yum install -y rpm-build
+make rpm 
+yum install -y  ./build/amazon-efs-utils*rpm
+````
+
+
+sudo mkdir /etc/ssl/private
+sudo chmod 700 /etc/ssl/private
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ACS.key -out /etc/ssl/certs/ACS.crt
+sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+
+Succesfully generating the certificate   
+![image](https://user-images.githubusercontent.com/50557587/150351723-d7ab1e28-8f7b-4b55-92e1-b9f6ca64e02e.png)
+
+To confirm if the ACS.crt and ACS.key file
+![image](https://user-images.githubusercontent.com/50557587/150353343-ac98b20c-455b-4435-a106-1dfd3148dfa3.png)
+
+All settings above for Nginx AMI
+
+Webserver AMI installation
+```
+yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+yum install wget vim python3 telnet htop git mysql net-tools chrony -y
+systemctl start chronyd
+systemctl enable chronyd
+```
+
+Same configuration setting for nginx and webserver, the only difference is the self signed cerificate for the apache webserver instance.
+yum install -y mod_ssl
+openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/ACS.key -x509 -days 365 -out /etc/pki/tls/certs/ACS.crt
+vi /etc/httpd/conf.d/ssl.conf
+
+Edit the ssl.conf to conform with the key and crt file we created.
+![image](https://user-images.githubusercontent.com/50557587/150358614-fe8c03f6-1b9f-41da-83db-c51d875187d8.png)
+
+Create AMI for each instance created.  
+![image](https://user-images.githubusercontent.com/50557587/150359106-824b4336-be22-4c3b-a2d2-a7b981480b31.png)
+![image](https://user-images.githubusercontent.com/50557587/150359346-e6a8e847-3613-4fcd-9459-b101bcff8046.png)
+
+Create Target groups for Nginx, Worpress and Tooling.
+![image](https://user-images.githubusercontent.com/50557587/150360649-54529cd5-0325-41fc-95fa-19b2fbb5d618.png)
+![image](https://user-images.githubusercontent.com/50557587/150360778-fc602208-9c08-45cf-baed-eaef01e3b7f1.png)
+
+Create Load Balancers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
