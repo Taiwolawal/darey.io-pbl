@@ -200,6 +200,8 @@ Create record for our load balancer (route 53)
 ![image](https://user-images.githubusercontent.com/50557587/150566101-df3172ce-7570-4a0e-964e-65bee3efb9cb.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566312-7f982d21-c15b-48c4-b48f-9937eec345b1.png)
 
+e
+
 
 
 
