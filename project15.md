@@ -149,7 +149,8 @@ We can configure a rule so that we can cache tooling request and forward to the 
 ![image](https://user-images.githubusercontent.com/50557587/150386415-c7120a4c-9dc6-4874-b781-a4e3003219ac.png)
 ![image](https://user-images.githubusercontent.com/50557587/150386929-ae4b7310-4b2a-42ad-b3cb-acc6d80ef3c7.png)
 
-Create launch templates (Bastion, Nginx, Wordpress).  
+Create launch templates (Bastion, Nginx, Wordpress and Tooling).
+Wordpress and Tooling both make use of Webserver AMI
 ![image](https://user-images.githubusercontent.com/50557587/150390913-b00794e2-f633-47bc-9a9a-9a587b1d4d26.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392726-19175cec-bb25-43e8-9f3b-14dd496fe978.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392902-7abfad14-faf7-4a69-9e40-49a4b2338881.png)
@@ -166,6 +167,45 @@ Update the mount point to the file system
 `sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/`  
 ![image](https://user-images.githubusercontent.com/50557587/150426608-2b90d1fc-62d7-44da-b724-88121304f7c1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150427269-dd082338-1c79-4d3e-bc82-958f59669ee9.png)
+
+
+word press endpoint
+![image](https://user-images.githubusercontent.com/50557587/150510954-4dc182a0-83c3-4beb-ac65-1615a45288da.png)
+
+Paste the rds end-point in the wordpress userdata and tooling userdata 
+![image](https://user-images.githubusercontent.com/50557587/150511435-cb7a412a-ee8a-4a25-afb8-29afa34aa29d.png)
+
+Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling 
+The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx
+![image](https://user-images.githubusercontent.com/50557587/150515542-c5276d57-4621-4b41-b646-a91c2c12e182.png)
+![image](https://user-images.githubusercontent.com/50557587/150516194-1eb8fb61-237b-4a19-ac12-5d0eeac5ff67.png)
+![image](https://user-images.githubusercontent.com/50557587/150516334-d95ac6c9-0ccf-410e-828c-4aba93d4ce3c.png)
+![image](https://user-images.githubusercontent.com/50557587/150516526-b7763799-2548-4a4f-9a08-103be95028b1.png)
+![image](https://user-images.githubusercontent.com/50557587/150516858-b3df64c6-7519-4122-9cec-e6360530e285.png)
+
+
+Copy the endpoint of the database. 
+![image](https://user-images.githubusercontent.com/50557587/150548054-9299c62e-2f1d-4788-ae50-0bd26a2fa971.png)
+
+Create database for tooling and wordpress for Bastion
+![image](https://user-images.githubusercontent.com/50557587/150548725-faae3ac6-625b-4d96-86b7-8624c5770659.png)
+
+
+
+![image](https://user-images.githubusercontent.com/50557587/150561500-90f776ea-c484-4ceb-b0e3-2adca4e1eb99.png)
+
+Create record for our load balancer (route 53)
+![image](https://user-images.githubusercontent.com/50557587/150565164-f2916f80-dea4-45ee-b1bf-338906c88f3f.png)
+![image](https://user-images.githubusercontent.com/50557587/150566028-f51773b8-b692-45ac-8570-665e3bdfd2e0.png)
+![image](https://user-images.githubusercontent.com/50557587/150566101-df3172ce-7570-4a0e-964e-65bee3efb9cb.png)
+![image](https://user-images.githubusercontent.com/50557587/150566312-7f982d21-c15b-48c4-b48f-9937eec345b1.png)
+
+
+
+
+
+
+
 
 
 
