@@ -202,6 +202,11 @@ Create record for our load balancer (route 53)
 
 e
 
+Alltarget group are healthy.  
+![image](https://user-images.githubusercontent.com/50557587/150592222-0882c0c9-8213-49ce-b60a-2cad4e333456.png)
+![image](https://user-images.githubusercontent.com/50557587/150592292-30dfc677-b3fe-4702-8739-85fae4faeaee.png)
+![image](https://user-images.githubusercontent.com/50557587/150592332-e3a19b2a-727f-4d5a-9907-955b7a1c560d.png)
+![image](https://user-images.githubusercontent.com/50557587/150592507-24554c2c-89f4-4f2b-b0a5-abda3cf911c5.png)
 
 
 
