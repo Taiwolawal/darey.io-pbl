@@ -84,7 +84,7 @@ Create 3 Instances (Redhat) with security group (All traffic - anywhere) named B
 
 Launch each instance and do some installation configurations
 
-For Bastion and Nginx
+For Bastion, Nginx and Webserver
 ```
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
@@ -93,7 +93,7 @@ systemctl start chronyd
 systemctl enable chronyd
 ```
 
-Nginx (needed so that our servers can function properly on all the redhat instance)
+Nginx and Webserver (needed so that our servers can function properly on all the redhat instance)
 ```
 setsebool -P httpd_can_network_connect=1
 setsebool -P httpd_can_network_connect_db=1
@@ -118,12 +118,24 @@ sudo chmod 700 /etc/ssl/private
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ACS.key -out /etc/ssl/certs/ACS.crt
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 ```
-
-Succesfully generating the certificate   
+Succesfully generating the certificate. In the common name, you enter  the private IPv4  dns of the instance (Webserver/Nginx). The load balancer does not validate the certicates but it needs to be installed. We use the certificate by specifying the path to the file ACS.crt and ACS.key in the nginx configuration. 
 ![image](https://user-images.githubusercontent.com/50557587/150351723-d7ab1e28-8f7b-4b55-92e1-b9f6ca64e02e.png)
+![image](https://user-images.githubusercontent.com/50557587/150647078-cc1777e8-032c-4b02-8672-fe54e3e2ac1e.png)
 
-To confirm if the ACS.crt and ACS.key file
+To confirm if the ACS.crt and ACS.key file exist
 ![image](https://user-images.githubusercontent.com/50557587/150353343-ac98b20c-455b-4435-a106-1dfd3148dfa3.png)
+
+Install self signed certificate for the webservers (Apache)
+```
+yum install -y mod_ssl
+openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/ACS.key -x509 -days 365 -out /etc/pki/tls/certs/ACS.crt
+vi /etc/httpd/conf.d/ssl.conf
+```
+Edit the ssl.conf to conform with the key and crt file we created.
+![image](https://user-images.githubusercontent.com/50557587/150358614-fe8c03f6-1b9f-41da-83db-c51d875187d8.png)
+
+
+
 
 All settings above for Nginx AMI
 
@@ -136,15 +148,7 @@ systemctl start chronyd
 systemctl enable chronyd
 ```
 
-Same configuration setting for nginx and webserver, the only difference is the self signed cerificate for the apache webserver instance.
-yum install -y mod_ssl
-openssl req -newkey rsa:2048 -nodes -keyout /etc/pki/tls/private/ACS.key -x509 -days 365 -out /etc/pki/tls/certs/ACS.crt
-vi /etc/httpd/conf.d/ssl.conf
-
-Edit the ssl.conf to conform with the key and crt file we created.
-![image](https://user-images.githubusercontent.com/50557587/150358614-fe8c03f6-1b9f-41da-83db-c51d875187d8.png)
-
-Create AMI for each instance created.  
+For each of the instance created, we create AMI on each.  
 ![image](https://user-images.githubusercontent.com/50557587/150359106-824b4336-be22-4c3b-a2d2-a7b981480b31.png)
 ![image](https://user-images.githubusercontent.com/50557587/150359346-e6a8e847-3613-4fcd-9459-b101bcff8046.png)
 
