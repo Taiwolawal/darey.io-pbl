@@ -218,34 +218,37 @@ word press endpoint
 Paste the rds end-point in the wordpress userdata and tooling userdata 
 ![image](https://user-images.githubusercontent.com/50557587/150511435-cb7a412a-ee8a-4a25-afb8-29afa34aa29d.png)
 
-Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling 
-The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx
+All launch templates created. 
+![image](https://user-images.githubusercontent.com/50557587/150654262-6fde2f08-98ca-4bf3-adb7-2598a3c47e87.png)
+
+
+Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx, Wordpress and Tooling. The Basstion do not make use of load balancer
 ![image](https://user-images.githubusercontent.com/50557587/150515542-c5276d57-4621-4b41-b646-a91c2c12e182.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516194-1eb8fb61-237b-4a19-ac12-5d0eeac5ff67.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516334-d95ac6c9-0ccf-410e-828c-4aba93d4ce3c.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516526-b7763799-2548-4a4f-9a08-103be95028b1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516858-b3df64c6-7519-4122-9cec-e6360530e285.png)
+![image](https://user-images.githubusercontent.com/50557587/150654345-7289562c-2ac0-442c-888b-2874c0c7639a.png)
+
 
 
 Copy the endpoint of the database. 
 ![image](https://user-images.githubusercontent.com/50557587/150548054-9299c62e-2f1d-4788-ae50-0bd26a2fa971.png)
 
-Create database for tooling and wordpress for Bastion
+Create database for tooling and wordpress for Bastion. Specify the RDS endpoint as the host
 ![image](https://user-images.githubusercontent.com/50557587/150548725-faae3ac6-625b-4d96-86b7-8624c5770659.png)
 
 
 
 ![image](https://user-images.githubusercontent.com/50557587/150561500-90f776ea-c484-4ceb-b0e3-2adca4e1eb99.png)
 
-Create record for our load balancer (route 53)
+Create record for our load balancer (route 53).  
 ![image](https://user-images.githubusercontent.com/50557587/150565164-f2916f80-dea4-45ee-b1bf-338906c88f3f.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566028-f51773b8-b692-45ac-8570-665e3bdfd2e0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566101-df3172ce-7570-4a0e-964e-65bee3efb9cb.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566312-7f982d21-c15b-48c4-b48f-9937eec345b1.png)
 
-e
-
-Alltarget group are healthy.  
+Alltarget group are healthy.    
 ![image](https://user-images.githubusercontent.com/50557587/150592222-0882c0c9-8213-49ce-b60a-2cad4e333456.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592292-30dfc677-b3fe-4702-8739-85fae4faeaee.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592332-e3a19b2a-727f-4d5a-9907-955b7a1c560d.png)
