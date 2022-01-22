@@ -12,13 +12,15 @@ Create Subnet for public and private, in each availablity zone respectively, thu
 ![image](https://user-images.githubusercontent.com/50557587/150122531-bb0d0afa-2daf-4cb4-9a34-1cd93d7e871e.png)
 ![image](https://user-images.githubusercontent.com/50557587/150123463-a460fe47-c809-4867-8a98-b51def63b450.png)
 
-Create a route table, private and public each. After creating it, click on the each route table -> Subnet Association -> Edit Subnet Association. For Public route table select the 2 public subnets and for Private route table select the 4 private subnets. 
+Create a route table, private and public each. After creating it, click on the each route table -> Subnet Association -> Edit Subnet Association. For Public route table select the 2 public subnets and for Private route table select the 4 private subnets.   
 ![image](https://user-images.githubusercontent.com/50557587/150123711-07e4b619-175d-4f3f-8dd7-0eb0f8bf6aa1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150123986-8e529585-9cfd-4adb-acc3-11e88852ae42.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124377-4cdbe2f2-492c-4a62-843f-5ce4bf1d1926.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124519-0c513370-65d3-49c7-8ac9-3674f4548678.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124578-7b7e1529-0b14-470e-bc8c-4e3f3ccbd2f1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124749-eb381064-1023-4dfa-8ef3-69e8b764a9f2.png)
+
+Edit route for each route table. For the Public route table -> add route, the setting is to enable the subnet attached to the route table have access to the internet so the target will be the Internet Gateway i.e communicating with the internet via the internet gateway. 
 ![image](https://user-images.githubusercontent.com/50557587/150124954-ae085841-6826-4a6c-a6ac-09bd3b4288e8.png)
 ![image](https://user-images.githubusercontent.com/50557587/150126023-ea56ffed-9d88-4086-849c-815cd7df824e.png)
 ![image](https://user-images.githubusercontent.com/50557587/150126523-59031509-1d0c-4e0d-b66b-450b25d8d71c.png)
