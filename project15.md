@@ -61,20 +61,17 @@ Create access point next which will specify where the webservers will mount with
 ![image](https://user-images.githubusercontent.com/50557587/150338385-0fe61ebb-af9f-4c1d-b4ef-0c49cac1a76a.png)   
 ![image](https://user-images.githubusercontent.com/50557587/150148559-419b7ae8-44e3-4cef-826d-107ab86e2cff.png)
 
-
-
-create rds  (kms key & Subnet group)
+Create Amazon RDS, before we commence on that we need to create KMS key (to encrypt RDS instance) and subnet group (placed in private subnet)
 ![image](https://user-images.githubusercontent.com/50557587/150149517-9d308809-9f54-4a60-afa3-a3f8fa6c0bf0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150149821-798e0478-d061-4ca0-aa65-c8d842f99733.png)
 ![image](https://user-images.githubusercontent.com/50557587/150339816-db65fae4-46e0-4d57-8788-99cc8294a6c4.png)
 ![image](https://user-images.githubusercontent.com/50557587/150340022-f0f5e8c0-4a76-4b26-af1f-a391eb7089ba.png)
-
 ![image](https://user-images.githubusercontent.com/50557587/150167610-6e078e4f-65a6-4efd-b003-b71cde1b4882.png)
 ![image](https://user-images.githubusercontent.com/50557587/150168567-8b6cdcfc-1759-4122-9a33-bb2fd21fde12.png)
 ![image](https://user-images.githubusercontent.com/50557587/150169001-f2d1844e-da3f-4ae1-bb6d-e12906eb4a02.png)
 ![image](https://user-images.githubusercontent.com/50557587/150169138-f7a6ea7d-716b-4370-b94b-9b30bc030596.png)
 
-database
+Create database   
 ![image](https://user-images.githubusercontent.com/50557587/150170525-f646b2b0-8ed9-4612-a0fe-5533f9a346cf.png)
 ![image](https://user-images.githubusercontent.com/50557587/150170641-246f331e-f438-4401-a42a-dc19b4df8baf.png)
 ![image](https://user-images.githubusercontent.com/50557587/150170744-3eefb5da-e6af-4ee2-b419-9ad28748e66b.png)
@@ -83,7 +80,11 @@ database
 
 Create Autoscaling group.
 
-Bastion
+Create 3 Instances (Redhat) with security group (All traffic - anywhere) named Bastion, Nginx and Webserver.
+
+Launch each instance and do some installation configurations
+
+For Bastion and Nginx
 ```
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
@@ -92,13 +93,15 @@ systemctl start chronyd
 systemctl enable chronyd
 ```
 
-Needed so that our servers can function properly on the redhat instance
+Nginx (needed so that our servers can function properly on all the redhat instance)
+```
 setsebool -P httpd_can_network_connect=1
 setsebool -P httpd_can_network_connect_db=1
 setsebool -P httpd_execmem=1
 setsebool -P httpd_use_nfs 1
+```
 
-Amazon efs utils
+Install Amazon efs utils for mounting targets on the elastic file system (Nginx)
 ```
 git clone https://github.com/aws/efs-utils
 cd efs-utils
@@ -108,11 +111,13 @@ make rpm
 yum install -y  ./build/amazon-efs-utils*rpm
 ````
 
-
+Install self signed certificate for the webservers (Nginx)
+```
 sudo mkdir /etc/ssl/private
 sudo chmod 700 /etc/ssl/private
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/ACS.key -out /etc/ssl/certs/ACS.crt
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
+```
 
 Succesfully generating the certificate   
 ![image](https://user-images.githubusercontent.com/50557587/150351723-d7ab1e28-8f7b-4b55-92e1-b9f6ca64e02e.png)
