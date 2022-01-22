@@ -1,5 +1,8 @@
+Create a VPC & Enable DNS hostnames.
 ![image](https://user-images.githubusercontent.com/50557587/150120955-de3f9b6d-34ac-4414-8f22-42833cfc4a7a.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121031-4880a9ea-64fa-44fd-9d24-3e15195d6df7.png)
+
+Create Internet gateway and attach to the VPC
 ![image](https://user-images.githubusercontent.com/50557587/150121279-bd051110-e67b-4833-b2ca-da99eefb5ea3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121381-811623d6-fac4-455e-8853-676851fc31b0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122385-2774810b-ea4d-4e81-968c-44f5ed1f92e3.png)
@@ -207,6 +210,10 @@ Alltarget group are healthy.
 ![image](https://user-images.githubusercontent.com/50557587/150592292-30dfc677-b3fe-4702-8739-85fae4faeaee.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592332-e3a19b2a-727f-4d5a-9907-955b7a1c560d.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592507-24554c2c-89f4-4f2b-b0a5-abda3cf911c5.png)
+
+
+![image](https://user-images.githubusercontent.com/50557587/150600292-35d07bda-9c60-4808-a423-b3da31a0acd8.png)
+
 
 
 
