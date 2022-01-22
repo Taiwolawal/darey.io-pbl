@@ -23,8 +23,14 @@ Create a route table, private and public each. After creating it, click on the e
 Edit route for each route table. For the Public route table -> add route, the setting is to enable the subnet attached to the route table have access to the internet so the target will be the Internet Gateway i.e communicating with the internet via the internet gateway. 
 ![image](https://user-images.githubusercontent.com/50557587/150124954-ae085841-6826-4a6c-a6ac-09bd3b4288e8.png)
 ![image](https://user-images.githubusercontent.com/50557587/150126023-ea56ffed-9d88-4086-849c-815cd7df824e.png)
+
+Create an Elastic IP address that will be used by the NAT-Gateway.  
 ![image](https://user-images.githubusercontent.com/50557587/150126523-59031509-1d0c-4e0d-b66b-450b25d8d71c.png)
+
+Create the Nat-Gateway, created in a public subnet and attached the elastic ip created.  
 ![image](https://user-images.githubusercontent.com/50557587/150126982-59d7a676-3713-40b5-ad5b-4f208aeda89c.png)
+
+Go back to the route table and edit Private route table in the edit routes, set target to the Nat-Gateway created earlier
 ![image](https://user-images.githubusercontent.com/50557587/150127348-25aa91c6-754a-497b-8b29-fb090c960a4f.png)
 ![image](https://user-images.githubusercontent.com/50557587/150128469-bdddcbf8-f589-4d9f-9707-a0b8c9650ca3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150129130-cda5ae6c-edc5-4232-92a1-36a1023e06f0.png)
