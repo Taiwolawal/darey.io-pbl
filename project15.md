@@ -30,8 +30,16 @@ Create an Elastic IP address that will be used by the NAT-Gateway.
 Create the Nat-Gateway, created in a public subnet and attached the elastic ip created.  
 ![image](https://user-images.githubusercontent.com/50557587/150126982-59d7a676-3713-40b5-ad5b-4f208aeda89c.png)
 
-Go back to the route table and edit Private route table in the edit routes, set target to the Nat-Gateway created earlier
+Go back to the route table and edit Private route table in the edit routes, set target to the Nat-Gateway created earlier.  
 ![image](https://user-images.githubusercontent.com/50557587/150127348-25aa91c6-754a-497b-8b29-fb090c960a4f.png)
+
+Create security group for:
+* External Load balancer - Traffic from the internet (http, https).
+* Bastion - SSH access from your computer.
+* Nginx (Reverse Proxy Server) - Source of traffic only from the external load balance and SSH from Bastion.
+* Internal Load balancer -  traffic only form Nginx.
+* Webserver - traffic source from Internal Load Balancer and SSH from Bastion only.
+* Datalayer - traffic from Bastion (Mysql), Webserver (NFS and Mysql).    
 ![image](https://user-images.githubusercontent.com/50557587/150128469-bdddcbf8-f589-4d9f-9707-a0b8c9650ca3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150129130-cda5ae6c-edc5-4232-92a1-36a1023e06f0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150134852-9ba280e0-9c8e-460d-99cc-bb95349b3e68.png)
@@ -39,19 +47,16 @@ Go back to the route table and edit Private route table in the edit routes, set 
 ![image](https://user-images.githubusercontent.com/50557587/150136559-d18d8173-dfd8-49a1-83c5-8762ed0bd389.png)
 ![image](https://user-images.githubusercontent.com/50557587/150141661-66347683-fa22-4463-be6b-be4ac3a7a2db.png)
 ![image](https://user-images.githubusercontent.com/50557587/150141832-3b711557-d388-4c41-8642-2625a62cbe80.png)
+
+Create certificate, ensure domain purchased is transferred to AWS Route 53. The purpose of the certificate is mainly because of the load balancer which will need a certificate because it listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.
 ![image](https://user-images.githubusercontent.com/50557587/150143152-d06bc918-c9ec-487a-b06f-c8b7985b6859.png)
 ![image](https://user-images.githubusercontent.com/50557587/150143710-6a50797b-503a-49c0-807e-901aac13d93f.png)
 
-EFS       
-![image](https://user-images.githubusercontent.com/50557587/150144572-24ac0645-a57a-4c14-82b1-1e21a4c3c59a.png)
-
-SECURITY SETTING        
+Create Amazon EFS: Add mount target to the filesystem i.e specifying subnet. Wherever you specify your mount target the Amazon EFS becomes avaible in that subnet as such we specify it in private subnet 1 & 2 and set security group setting to datalayer security we created.      
+![image](https://user-images.githubusercontent.com/50557587/150144572-24ac0645-a57a-4c14-82b1-1e21a4c3c59a.png)       
 ![image](https://user-images.githubusercontent.com/50557587/150146070-011fac1e-9617-4a8c-969e-052693b096bf.png)
 
-
-   
-   
-CREATE ACCESS POINTS     
+Create access point next which will specify where the webservers will mount with, thus creating 2 mount points for Tooling and Wordpress servers each.       
 ![image](https://user-images.githubusercontent.com/50557587/150147463-bd4a62ba-6a19-44b1-a57b-cd896c6ba403.png)
 ![image](https://user-images.githubusercontent.com/50557587/150338385-0fe61ebb-af9f-4c1d-b4ef-0c49cac1a76a.png)   
 ![image](https://user-images.githubusercontent.com/50557587/150148559-419b7ae8-44e3-4cef-826d-107ab86e2cff.png)
