@@ -135,36 +135,22 @@ Edit the ssl.conf to conform with the key and crt file we created.
 ![image](https://user-images.githubusercontent.com/50557587/150358614-fe8c03f6-1b9f-41da-83db-c51d875187d8.png)
 
 
-
-
-All settings above for Nginx AMI
-
-Webserver AMI installation
-```
-yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
-yum install wget vim python3 telnet htop git mysql net-tools chrony -y
-systemctl start chronyd
-systemctl enable chronyd
-```
-
 For each of the instance created, we create AMI on each.  
 ![image](https://user-images.githubusercontent.com/50557587/150359106-824b4336-be22-4c3b-a2d2-a7b981480b31.png)
 ![image](https://user-images.githubusercontent.com/50557587/150359346-e6a8e847-3613-4fcd-9459-b101bcff8046.png)
 
-Create Target groups for Nginx, Worpress and Tooling.
+Create Target groups for Nginx, Worpress and Tooling because they are all behind a load balancer. The Auto-Scaling will launch instance in this target group.
 ![image](https://user-images.githubusercontent.com/50557587/150360649-54529cd5-0325-41fc-95fa-19b2fbb5d618.png)
 ![image](https://user-images.githubusercontent.com/50557587/150360778-fc602208-9c08-45cf-baed-eaef01e3b7f1.png)
 
-Create Load Balancers
-External Load Balancer.  
+Create Load Balancers (External Load Balancer - Internet facing). A load balancer needs at least 2 availabilty zones to work and placed in a public subnet.   
 ![image](https://user-images.githubusercontent.com/50557587/150383384-81c3f79c-1c1b-4197-b2d5-1ee05f57966f.png)
 ![image](https://user-images.githubusercontent.com/50557587/150383582-41c8c716-a1b2-48d9-85e6-197d3496f8b1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150383696-a73e2b9f-0520-4e1c-b761-04194234fad0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150383769-65ce600e-60a1-42f4-933b-48a3a632b662.png)
 ![image](https://user-images.githubusercontent.com/50557587/150384013-c1ae7e68-e560-4506-92f1-24b61e51b421.png)
 
-Internal Load Balancer    
+Create Load Balancers (Internal Load Balancer - Internal facing) to be placed in private subnet.      
 ![image](https://user-images.githubusercontent.com/50557587/150384659-1ed2c6bc-b822-4a99-a1ac-8cb4cb999746.png)
 ![image](https://user-images.githubusercontent.com/50557587/150384749-5bcbd443-8cd6-4388-808d-10554c1ccf8b.png)
 ![image](https://user-images.githubusercontent.com/50557587/150384879-46ac493b-fe20-4246-ae15-1ac390aabe7a.png)
@@ -188,9 +174,37 @@ Wordpress and Tooling both make use of Webserver AMI
 Apply the same setting for Nginx, the major difference is the userdata input  
 ![image](https://user-images.githubusercontent.com/50557587/150422434-c2f40b05-d048-4621-a3cc-810bcfccf8b8.png)
 
-We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file.  
-![image](https://user-images.githubusercontent.com/50557587/150424426-26df8814-98fe-4b35-b4fb-43336183fca1.png)
+Wordpress userdata
+```
+#!/bin/bash
+mkdir /var/www/
+sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/
+yum install -y httpd 
+systemctl start httpd
+systemctl enable httpd
+yum module reset php -y
+yum module enable php:remi-7.4 -y
+yum install -y php php-common php-mbstring php-opcache php-intl php-xml php-gd php-curl php-mysqlnd php-fpm php-json
+systemctl start php-fpm
+systemctl enable php-fpm
+wget http://wordpress.org/latest.tar.gz
+tar xzvf latest.tar.gz
+rm -rf latest.tar.gz
+cp wordpress/wp-config-sample.php wordpress/wp-config.php
+mkdir /var/www/html/
+cp -R /wordpress/* /var/www/html/
+cd /var/www/html/
+touch healthstatus
+sed -i "s/localhost/acs-database.cbzlhilzcstn.us-east-2.rds.amazonaws.com/g" wp-config.php 
+sed -i "s/username_here/ACSADMIN/g" wp-config.php 
+sed -i "s/password_here/password/g" wp-config.php 
+sed -i "s/database_name_here/wordpressdb/g" wp-config.php 
+chcon -t httpd_sys_rw_content_t /var/www/html/ -R
+systemctl restart httpd
+```
 
+We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file.  
+![image](https://user-images.githubusercontent.com/50557587/150648675-8d9df05f-833c-4af0-8564-ede28760e53b.png)
 
 Update the mount point to the file system
 `sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/`  
