@@ -1,10 +1,12 @@
-Create a VPC & Enable DNS hostnames.
+Create a VPC & enable DNS hostnames.
 ![image](https://user-images.githubusercontent.com/50557587/150120955-de3f9b6d-34ac-4414-8f22-42833cfc4a7a.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121031-4880a9ea-64fa-44fd-9d24-3e15195d6df7.png)
 
-Create Internet gateway and attach to the VPC
+Create Internet gateway and attach to the VPC.  
 ![image](https://user-images.githubusercontent.com/50557587/150121279-bd051110-e67b-4833-b2ca-da99eefb5ea3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121381-811623d6-fac4-455e-8853-676851fc31b0.png)
+
+Create Subnet for public and private, in each availablity zone respectively, thus for the public subnet, we create 2 subnet in Availability Zone A and B respectively and for the private subnet we create 4 subnet with respect to the diagram we are working with as such we create 2 subnets each in availability zone A and B each, totally 4 subnets.
 ![image](https://user-images.githubusercontent.com/50557587/150122385-2774810b-ea4d-4e81-968c-44f5ed1f92e3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122421-27723670-0eaf-4114-b121-145f7758e6e7.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122531-bb0d0afa-2daf-4cb4-9a34-1cd93d7e871e.png)
