@@ -48,7 +48,7 @@ Create security group for:
 ![image](https://user-images.githubusercontent.com/50557587/150141661-66347683-fa22-4463-be6b-be4ac3a7a2db.png)
 ![image](https://user-images.githubusercontent.com/50557587/150141832-3b711557-d388-4c41-8642-2625a62cbe80.png)
 
-Create certificate, ensure domain purchased is transferred to AWS Route 53. The certificate is needed mainly because of the load balancer which will need a certificate because it listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.
+Create certificate, ensure domain purchased is transferred to AWS Route 53. The certificate is needed mainly because of the load balancer which will need a certificate because it listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.    
 ![image](https://user-images.githubusercontent.com/50557587/150143152-d06bc918-c9ec-487a-b06f-c8b7985b6859.png)
 ![image](https://user-images.githubusercontent.com/50557587/150143710-6a50797b-503a-49c0-807e-901aac13d93f.png)
 
@@ -249,6 +249,8 @@ All target group are healthy.
 ![image](https://user-images.githubusercontent.com/50557587/150592332-e3a19b2a-727f-4d5a-9907-955b7a1c560d.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592507-24554c2c-89f4-4f2b-b0a5-abda3cf911c5.png)
 ![image](https://user-images.githubusercontent.com/50557587/150600292-35d07bda-9c60-4808-a423-b3da31a0acd8.png)
+
+Note: You can have access to Nginx, Tooling and Wordpress server via Bastion only.
 
 
 
