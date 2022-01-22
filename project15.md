@@ -6,7 +6,7 @@ Create Internet gateway and attach to the VPC.
 ![image](https://user-images.githubusercontent.com/50557587/150121279-bd051110-e67b-4833-b2ca-da99eefb5ea3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121381-811623d6-fac4-455e-8853-676851fc31b0.png)
 
-Create Subnet for public and private, in each availablity zone respectively, thus for the public subnet, we create 2 subnet in Availability Zone A and B respectively and for the private subnet we create 4 subnet with respect to the diagram we are working with as such we create 2 subnets each in availability zone A and B each, totally 4 subnets.
+Create subnet for public and private, in each availablity zone respectively, thus for the public subnet, we create 2 subnets in availability zone A and B respectively and for the private subnet we create 4 subnets with respect to the diagram we are working with as such we create 2 subnets each in availability zone A and B each, totally 4 subnets.
 ![image](https://user-images.githubusercontent.com/50557587/150122385-2774810b-ea4d-4e81-968c-44f5ed1f92e3.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122421-27723670-0eaf-4114-b121-145f7758e6e7.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122531-bb0d0afa-2daf-4cb4-9a34-1cd93d7e871e.png)
@@ -20,14 +20,14 @@ Create a route table, private and public each. After creating it, click on the e
 ![image](https://user-images.githubusercontent.com/50557587/150124578-7b7e1529-0b14-470e-bc8c-4e3f3ccbd2f1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124749-eb381064-1023-4dfa-8ef3-69e8b764a9f2.png)
 
-Edit route for each route table. For the Public route table -> add route, the setting is to enable the subnet attached to the route table have access to the internet so the target will be the Internet Gateway i.e communicating with the internet via the internet gateway. 
+Edit route for each route table. For the Public route table -> Edit route, the setting is to enable the subnet attached to the route table have access to the internet so the target will be the Internet Gateway i.e communicating with the internet via the internet gateway. 
 ![image](https://user-images.githubusercontent.com/50557587/150124954-ae085841-6826-4a6c-a6ac-09bd3b4288e8.png)
 ![image](https://user-images.githubusercontent.com/50557587/150126023-ea56ffed-9d88-4086-849c-815cd7df824e.png)
 
 Create an Elastic IP address that will be used by the NAT-Gateway.  
 ![image](https://user-images.githubusercontent.com/50557587/150126523-59031509-1d0c-4e0d-b66b-450b25d8d71c.png)
 
-Create the Nat-Gateway, created in a public subnet and attached the elastic ip created.  
+Create the Nat-Gateway, created in a public subnet and attached the Elastic IP created.  
 ![image](https://user-images.githubusercontent.com/50557587/150126982-59d7a676-3713-40b5-ad5b-4f208aeda89c.png)
 
 Go back to the route table and edit Private route table in the edit routes, set target to the Nat-Gateway created earlier.  
@@ -36,7 +36,7 @@ Go back to the route table and edit Private route table in the edit routes, set 
 Create security group for:
 * External Load balancer - Traffic from the internet (http, https).
 * Bastion - SSH access from your computer.
-* Nginx (Reverse Proxy Server) - Source of traffic only from the external load balance and SSH from Bastion.
+* Nginx (Reverse Proxy Server) - Source of traffic only from the external load balancer and SSH from Bastion.
 * Internal Load balancer -  traffic only form Nginx.
 * Webserver - traffic source from Internal Load Balancer and SSH from Bastion only.
 * Datalayer - traffic from Bastion (Mysql), Webserver (NFS and Mysql).    
@@ -48,7 +48,7 @@ Create security group for:
 ![image](https://user-images.githubusercontent.com/50557587/150141661-66347683-fa22-4463-be6b-be4ac3a7a2db.png)
 ![image](https://user-images.githubusercontent.com/50557587/150141832-3b711557-d388-4c41-8642-2625a62cbe80.png)
 
-Create certificate, ensure domain purchased is transferred to AWS Route 53. The purpose of the certificate is mainly because of the load balancer which will need a certificate because it listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.
+Create certificate, ensure domain purchased is transferred to AWS Route 53. The certificate is needed mainly because of the load balancer which will need a certificate because it listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.
 ![image](https://user-images.githubusercontent.com/50557587/150143152-d06bc918-c9ec-487a-b06f-c8b7985b6859.png)
 ![image](https://user-images.githubusercontent.com/50557587/150143710-6a50797b-503a-49c0-807e-901aac13d93f.png)
 
@@ -78,13 +78,13 @@ Create database
 ![image](https://user-images.githubusercontent.com/50557587/150170847-1563e4d3-ff3d-40c0-9983-5874e011d038.png)
 ![image](https://user-images.githubusercontent.com/50557587/150170997-f8067b22-4458-4c11-90f1-63ab62a4dad6.png)
 
-Create Autoscaling group.
+Create Autoscaling group : The following steps below must take place before creating it.
 
 Create 3 Instances (Redhat) with security group (All traffic - anywhere) named Bastion, Nginx and Webserver.
 
-Launch each instance and do some installation configurations
+Launch each instance and do some installation on them.
 
-For Bastion, Nginx and Webserver
+For Bastion, Nginx and Webserver.
 ```
 yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 yum install -y dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
@@ -93,7 +93,7 @@ systemctl start chronyd
 systemctl enable chronyd
 ```
 
-Nginx and Webserver (needed so that our servers can function properly on all the redhat instance)
+Nginx and Webserver (needed so that our servers can function properly on all the redhat instance).
 ```
 setsebool -P httpd_can_network_connect=1
 setsebool -P httpd_can_network_connect_db=1
@@ -101,7 +101,7 @@ setsebool -P httpd_execmem=1
 setsebool -P httpd_use_nfs 1
 ```
 
-Install Amazon efs utils for mounting targets on the elastic file system (Nginx)
+Install Amazon efs utils for mounting targets on the elastic file system (Nginx and Webserver).
 ```
 git clone https://github.com/aws/efs-utils
 cd efs-utils
@@ -111,7 +111,7 @@ make rpm
 yum install -y  ./build/amazon-efs-utils*rpm
 ````
 
-Install self signed certificate for the webservers (Nginx)
+Install self signed certificate for the webservers (Nginx).
 ```
 sudo mkdir /etc/ssl/private
 sudo chmod 700 /etc/ssl/private
@@ -222,7 +222,7 @@ All launch templates created.
 ![image](https://user-images.githubusercontent.com/50557587/150654262-6fde2f08-98ca-4bf3-adb7-2598a3c47e87.png)
 
 
-Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx, Wordpress and Tooling. The Basstion do not make use of load balancer
+Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx, Wordpress and Tooling. The Bastion do not make use of load balancer.  
 ![image](https://user-images.githubusercontent.com/50557587/150515542-c5276d57-4621-4b41-b646-a91c2c12e182.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516194-1eb8fb61-237b-4a19-ac12-5d0eeac5ff67.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516334-d95ac6c9-0ccf-410e-828c-4aba93d4ce3c.png)
@@ -230,31 +230,24 @@ Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same set
 ![image](https://user-images.githubusercontent.com/50557587/150516858-b3df64c6-7519-4122-9cec-e6360530e285.png)
 ![image](https://user-images.githubusercontent.com/50557587/150654345-7289562c-2ac0-442c-888b-2874c0c7639a.png)
 
-
-
-Copy the endpoint of the database. 
+Copy the endpoint of the database.    
 ![image](https://user-images.githubusercontent.com/50557587/150548054-9299c62e-2f1d-4788-ae50-0bd26a2fa971.png)
 
-Create database for tooling and wordpress for Bastion. Specify the RDS endpoint as the host
+Create database for tooling and wordpress for Bastion. Specify the RDS endpoint as the host.  
 ![image](https://user-images.githubusercontent.com/50557587/150548725-faae3ac6-625b-4d96-86b7-8624c5770659.png)
-
-
-
 ![image](https://user-images.githubusercontent.com/50557587/150561500-90f776ea-c484-4ceb-b0e3-2adca4e1eb99.png)
 
-Create record for our load balancer (route 53).  
+Create record for our load balancer (route 53).    
 ![image](https://user-images.githubusercontent.com/50557587/150565164-f2916f80-dea4-45ee-b1bf-338906c88f3f.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566028-f51773b8-b692-45ac-8570-665e3bdfd2e0.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566101-df3172ce-7570-4a0e-964e-65bee3efb9cb.png)
 ![image](https://user-images.githubusercontent.com/50557587/150566312-7f982d21-c15b-48c4-b48f-9937eec345b1.png)
 
-Alltarget group are healthy.    
+All target group are healthy.       
 ![image](https://user-images.githubusercontent.com/50557587/150592222-0882c0c9-8213-49ce-b60a-2cad4e333456.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592292-30dfc677-b3fe-4702-8739-85fae4faeaee.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592332-e3a19b2a-727f-4d5a-9907-955b7a1c560d.png)
 ![image](https://user-images.githubusercontent.com/50557587/150592507-24554c2c-89f4-4f2b-b0a5-abda3cf911c5.png)
-
-
 ![image](https://user-images.githubusercontent.com/50557587/150600292-35d07bda-9c60-4808-a423-b3da31a0acd8.png)
 
 
