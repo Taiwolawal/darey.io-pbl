@@ -11,6 +11,8 @@ Create Subnet for public and private, in each availablity zone respectively, thu
 ![image](https://user-images.githubusercontent.com/50557587/150122421-27723670-0eaf-4114-b121-145f7758e6e7.png)
 ![image](https://user-images.githubusercontent.com/50557587/150122531-bb0d0afa-2daf-4cb4-9a34-1cd93d7e871e.png)
 ![image](https://user-images.githubusercontent.com/50557587/150123463-a460fe47-c809-4867-8a98-b51def63b450.png)
+
+Create a route table, private and public each. After creating it, click on the each route table -> Subnet Association -> Edit Subnet Association. For Public route table select the 2 public subnets and for Private route table select the 4 private subnets. 
 ![image](https://user-images.githubusercontent.com/50557587/150123711-07e4b619-175d-4f3f-8dd7-0eb0f8bf6aa1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150123986-8e529585-9cfd-4adb-acc3-11e88852ae42.png)
 ![image](https://user-images.githubusercontent.com/50557587/150124377-4cdbe2f2-492c-4a62-843f-5ce4bf1d1926.png)
