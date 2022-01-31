@@ -37,12 +37,26 @@
 ![p1](https://user-images.githubusercontent.com/50557587/142701102-06d34092-1881-40f7-8621-57cbaa77f738.PNG)
 
 - Run `sudo mount -a` to confirm if the mount was ok and reload daemon `sudo systemctl daemon-reload`.
-- Install NFS Server, configure it to start on reboot and make sure its up and running.   
-![p10](https://user-images.githubusercontent.com/50557587/142701394-5612f51c-c945-46de-bf3d-5a6ea78a9f31.PNG)
-
+- Install NFS Server, configure it to start on reboot and make sure its up and running. 
+```
+sudo yum -y update
+sudo yum install nfs-utils -y
+sudo systemctl start nfs-server.service
+sudo systemctl enable nfs-server.service
+sudo systemctl status nfs-server.service
+```
 - Set up permission that will allow the Web servers to read, write and execute file on the NFS.
-![p11](https://user-images.githubusercontent.com/50557587/142701671-2677477b-4741-4927-b433-e25ac5fdc60d.PNG)
+```
+sudo chown -R nobody: /mnt/apps
+sudo chown -R nobody: /mnt/logs
+sudo chown -R nobody: /mnt/opt
 
+sudo chmod -R 777 /mnt/apps
+sudo chmod -R 777 /mnt/logs
+sudo chmod -R 777 /mnt/opt
+
+sudo systemctl restart nfs-server.service
+```
 - Get the subnet cidr for NFS on the EC2, locate 'Networking' tab and open Subnet link.
 - ![p12](https://user-images.githubusercontent.com/50557587/142702495-d8a05ab6-73e4-44b6-adc4-489c0224a88d.PNG)
 
