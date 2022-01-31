@@ -99,7 +99,12 @@ sudo mysql_secure_installation
 - Run df -h to confirm that NFS was mounted successfully.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/apps /var/www nfs defaults 0 0`.
 - Repeat the steps above on the 2 Web Servers.
-- Install Apache `sudo yum install httpd -y`.
+- Install Apache
+ sudo yum install httpd -y
+ sudo systemctl enable httpd 
+ sudo systemctl start httpd
+ sudo systemctl status httpd
+ 
 - Verify that the Apache files and directories are available on the Web servers in /var/www are same on the NFS in /mnt/apps, if same files are showing, it means NFS mounted correctly.
 - Locate the log folder for Apache on the Web Server and mount it to NFS server's  export for log.
 - Since the log folder already contains some content we need to back it up because if we mount on that directory we lose the content inside.
