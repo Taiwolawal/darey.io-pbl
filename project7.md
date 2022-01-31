@@ -88,11 +88,18 @@ sudo mysql_secure_installation
 ## Configure Web Servers
 - Launch 3 new EC2 instance with RHEL 8 Operating System.'
 - Ensure to open TCP port 80 on all the Web server.
-- Install NFS client and Apache `sudo yum install nfs-utils nfs4-acl-tools -y`, `sudo systemctl start nfs-server`, `sudo systemctl enable nfs-server`, `sudo systemctl status nfs-server`, `sudo yum install httpd -y`.
+- Install NFS client
+```
+ sudo yum install nfs-utils nfs4-acl-tools -y, 
+ sudo systemctl start nfs-server
+ sudo systemctl enable nfs-server
+ sudo systemctl status nfs-server 
+ ```
 - Create directory  `mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/apps /var/www`.
 - Run df -h to confirm that NFS was mounted successfully.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/apps /var/www nfs defaults 0 0`.
 - Repeat the steps above on the 2 Web Servers.
+- Install Apache `sudo yum install httpd -y`.
 - Verify that the Apache files and directories are available on the Web servers in /var/www are same on the NFS in /mnt/apps, if same files are showing, it means NFS mounted correctly.
 - Locate the log folder for Apache on the Web Server and mount it to NFS server's  export for log.
 - Since the log folder already contains some content we need to back it up because if we mount on that directory we lose the content inside.
