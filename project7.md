@@ -70,8 +70,15 @@ sudo systemctl restart nfs-server.service
 - In order for NFS server to be accessible from your client, you must also open following ports: TCP 111, UDP 111, UDP 2049
 
 ## Configure Database
-- Install mysql-server `sudo apt install mysql-server`, `sudo systemctl start mysql`, `sudo systemctl enable mysql`, `sudo systemctl status mysql`.
-- sudo mysql_secure_installation.
+- Install mysql-server 
+```
+sudo apt install mysql-server
+sudo systemctl start mysql 
+sudo systemctl enable mysql 
+sudo systemctl status mysql
+sudo mysql_secure_installation
+```
+
 - Create database for tooling and other set up.     
 ![p17](https://user-images.githubusercontent.com/50557587/142710997-998642e1-0e67-4377-911b-ea0c4af35a09.PNG)
 
