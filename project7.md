@@ -47,12 +47,8 @@ sudo systemctl status nfs-server.service
 ```
 - Set up permission that will allow the Web servers to read, write and execute file on the NFS.
 ```
-sudo chown -R nobody: /mnt/apps
-sudo chown -R nobody: /mnt/logs
-sudo chown -R nobody: /mnt/opt
-sudo chmod -R 777 /mnt/apps
-sudo chmod -R 777 /mnt/logs
-sudo chmod -R 777 /mnt/opt
+sudo chown -R nobody:nobody /mnt
+sudo chmod -R 777 /mnt
 sudo systemctl restart nfs-server.service
 ```
 - Get the subnet cidr for NFS on the EC2, locate 'Networking' tab and open Subnet link.
