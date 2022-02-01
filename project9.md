@@ -13,9 +13,6 @@ sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sou
 sudo apt update
 sudo apt-get install jenkins
 ```
-
-![1](https://user-images.githubusercontent.com/50557587/142726479-a7181a2d-696f-4d88-98fb-f67d6063cc4c.PNG)
-
 - Confirm Jenkins is up and running `sudo systemctl status jenkins`.
 - Create a new inbound rule in the EC2 Security Group to TCP port 8080    
 ![2](https://user-images.githubusercontent.com/50557587/142726600-0ad35ae6-802a-4cb9-87a7-fa4fd1d97f28.PNG)
