@@ -88,7 +88,7 @@ sudo mysql_secure_installation
 - Ensure to open TCP port 80 on all the Web server.
 - Install NFS client
 ```
- sudo yum install nfs-utils nfs4-acl-tools -y, 
+ sudo yum install nfs-utils nfs4-acl-tools -y
  sudo systemctl start nfs-server
  sudo systemctl enable nfs-server
  sudo systemctl status nfs-server 
