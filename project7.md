@@ -50,11 +50,9 @@ sudo systemctl status nfs-server.service
 sudo chown -R nobody: /mnt/apps
 sudo chown -R nobody: /mnt/logs
 sudo chown -R nobody: /mnt/opt
-
 sudo chmod -R 777 /mnt/apps
 sudo chmod -R 777 /mnt/logs
 sudo chmod -R 777 /mnt/opt
-
 sudo systemctl restart nfs-server.service
 ```
 - Get the subnet cidr for NFS on the EC2, locate 'Networking' tab and open Subnet link.
