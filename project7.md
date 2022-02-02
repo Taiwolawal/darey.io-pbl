@@ -127,6 +127,12 @@ sudo mysql_secure_installation
 
 -Install PHP.   
 ![php](https://user-images.githubusercontent.com/50557587/143293842-6f6e662e-152a-4165-9b68-d494995069dd.PNG)
+```
+setsebool -P httpd_can_network_connect=1
+setsebool -P httpd_can_network_connect_db=1
+setsebool -P httpd_execmem=1
+setsebool -P httpd_use_nfs 1
+````
 
 - Connect with the database `sudo mysql -h 172.31.4.144 -u webaccess -p tooling < tooling-db.sql`, this will take place in the tooling folder.
 - Launch all the public ip address of the the 3 Web Servers and you will get a login page.
