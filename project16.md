@@ -112,15 +112,75 @@ variable "enable_classiclink_dns_support" {
 ```
 
 The terraform.tfvars file will contain the content below:
+```
+region = "us-east-2"
+
+vpc_cidr = "172.16.0.0/16" 
+
+enable_dns_support = "true" 
+
+enable_dns_hostnames = "true"  
+
+enable_classiclink = "false" 
+
+enable_classiclink_dns_support = "false" 
+
+preferred_number_of_public_subnets = 2
+```
+
+The main.tf will have the content below:
+```
+# Get list of availability zones
+data "aws_availability_zones" "available" {
+state = "available"
+}
+
+provider "aws" {
+  region = var.region
+}
+
+# Create VPC
+resource "aws_vpc" "main" {
+  cidr_block                     = var.vpc_cidr
+  enable_dns_support             = var.enable_dns_support
+  enable_dns_hostnames           = var.enable_dns_support
+  enable_classiclink             = var.enable_classiclink
+  enable_classiclink_dns_support = var.enable_classiclink
+}
+
+# Create public subnets
+resource "aws_subnet" "public" {
+  count  = var.preferred_number_of_public_subnets == null ? length(data.aws_availability_zones.available.names) : var.preferred_number_of_public_subnets   
+  vpc_id = aws_vpc.main.id
+  cidr_block              = cidrsubnet(var.vpc_cidr, 4 , count.index)
+  map_public_ip_on_launch = true
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+
+}
+```
 
 
+The essesnce of creating all this files is to ensure that we do not hard code values which give room for re-usability.
 
+The variables.tf consist of all variable declarations in the main.tf file.
 
+The terraform.tfvars file set values for each of the variables.
 
-![b](https://user-images.githubusercontent.com/50557587/152675319-4b680446-4c71-4b03-be1b-d47851ad32b3.PNG)
+The structure of the PBL folder will be like:  
+![image](https://user-images.githubusercontent.com/50557587/152676899-0ea6f225-d5a1-4dee-a5b1-db9d5245e324.png)
+
+Run `terraform plan` to ensure all configuration is not showing any error and run `terraform apply`.   
 ![c](https://user-images.githubusercontent.com/50557587/152675324-8149a54c-924a-404e-aa13-568b9027b9be.PNG)
 ![d](https://user-images.githubusercontent.com/50557587/152675326-f5b8d82f-2ec9-4f91-85b7-17da62af3313.PNG)
-![e](https://user-images.githubusercontent.com/50557587/152675327-380d1649-5703-4d3c-b985-23f1ed689402.PNG)
-
-![h](https://user-images.githubusercontent.com/50557587/152675332-e1e20668-51b7-439d-8d9f-d745bb247cf9.PNG)
 ![i](https://user-images.githubusercontent.com/50557587/152675336-dc948203-8b45-4057-bf12-24d5c9202ff4.PNG)
+
+To confirm if the VPC and Subnets were created, go to your AWS account to confirm. 
+![image](https://user-images.githubusercontent.com/50557587/152677303-7e815b7c-7879-4371-865b-9fc13d83a29a.png)
+
+The above shows 2 VPC's with one of them been the default VPC that comes with the AWS and the other one is the one we created with vpc-cidr = 172.16.0.0/16
+
+Below is the sunbets created also:    
+![image](https://user-images.githubusercontent.com/50557587/152677533-2c563d5c-965d-4d72-9475-f3fc3c07dd4b.png)
+
+To destroy the infrastructure, just run the command `terraform destroy`.
+
