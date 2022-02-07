@@ -1,5 +1,15 @@
 # AWS Cloud Solution For 2 Company Websites Using A Reverse Proxy Technology.
 
+WARNING: This infrastructure set up is NOT covered by AWS free tier. Therefore, ensure to DELETE ALL the resources created immediately after finishing the project. Monthly cost may be shockingly high if resources are not deleted.
+
+We will build a secure infrastructure inside AWS VPC (Virtual Private Cloud) network for a fictitious company that uses WordPress CMS for its main business website, and a Tooling Website (https://github.com/Taiwolawal/tooling) for their DevOps team. As part of the company’s desire for improved security and performance, a decision has been made to use a reverse proxy technology from NGINX to achieve this
+
+Cost, Security, and Scalability are the major requirements for this project. Hence, implementing the architecture designed below, ensure that infrastructure for both websites, WordPress and Tooling, is resilient to Web Server’s failures, can accomodate to increased traffic and, at the same time, has reasonable cost.  
+
+![image](https://user-images.githubusercontent.com/50557587/152831445-844e3865-0317-4bf4-969a-490a7c1e06ba.png)
+
+## Set Up A Virtual Private Network (VPC).  
+
 Create a VPC & enable DNS hostnames.
 ![image](https://user-images.githubusercontent.com/50557587/150120955-de3f9b6d-34ac-4414-8f22-42833cfc4a7a.png)
 ![image](https://user-images.githubusercontent.com/50557587/150121031-4880a9ea-64fa-44fd-9d24-3e15195d6df7.png)
