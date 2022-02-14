@@ -262,7 +262,12 @@ All launch templates created.
 ![image](https://user-images.githubusercontent.com/50557587/150654262-6fde2f08-98ca-4bf3-adb7-2598a3c47e87.png)
 
 
-Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx, Wordpress and Tooling. The Bastion do not make use of load balancer.  
+Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same setting used for Bastion will be used for Nginx, the only difference is Load Balancer is added to Nginx, Wordpress and Tooling. The Bastion do not make use of load balancer. 
+
+Before creating  Autoscaling Group for WordPress and Tooling, create database for tooling and wordpress through Bastion connecting to our RDS i.e we SSH into our Bastion server and from the bastion we connect into RDS by copying the RDS endpoint as host. When we are already in the RDS instance, create database for tooling and wordpress respectively.  
+
+Copy the endpoint of the database.    
+![image](https://user-images.githubusercontent.com/50557587/150548054-9299c62e-2f1d-4788-ae50-0bd26a2fa971.png)
 ![image](https://user-images.githubusercontent.com/50557587/150515542-c5276d57-4621-4b41-b646-a91c2c12e182.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516194-1eb8fb61-237b-4a19-ac12-5d0eeac5ff67.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516334-d95ac6c9-0ccf-410e-828c-4aba93d4ce3c.png)
@@ -270,10 +275,6 @@ Create Autoscaling Group for Bastion, Nginx, WordPress and Tooling. The same set
 ![image](https://user-images.githubusercontent.com/50557587/150516858-b3df64c6-7519-4122-9cec-e6360530e285.png)
 ![image](https://user-images.githubusercontent.com/50557587/150654345-7289562c-2ac0-442c-888b-2874c0c7639a.png)
 
-Create database for tooling and wordpress through Bastion connecting to our RDS i.e we SSH into our Bastion server and from the bastion we connect into RDS by copying the RDS endpoint as host. When we are already in the RDS instance, create database for tooling and wordpress respectively.
-
-Copy the endpoint of the database.    
-![image](https://user-images.githubusercontent.com/50557587/150548054-9299c62e-2f1d-4788-ae50-0bd26a2fa971.png)
 ![image](https://user-images.githubusercontent.com/50557587/150548725-faae3ac6-625b-4d96-86b7-8624c5770659.png)
 ![image](https://user-images.githubusercontent.com/50557587/150561500-90f776ea-c484-4ceb-b0e3-2adca4e1eb99.png)
 
