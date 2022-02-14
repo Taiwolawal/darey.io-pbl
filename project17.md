@@ -2,7 +2,7 @@
 
 This is the continuation of Project 16, where we have already created VPC and  public subnets.
 
-We continue by creating private subnet by entrying the code below in main.tf
+We continue by creating private subnet by entrying the code below in main.tf file.
 ```
 resource "aws_subnet" "private" {
   vpc_id     = aws_vpc.main.id
@@ -17,7 +17,7 @@ resource "aws_subnet" "private" {
   )
 }
 ````
-Enter the values below in the variables.tf
+Enter the values below in the variables.tf file.
 ```
 variable "preferred_number_of_private_subnets" {
   type        = number
@@ -35,7 +35,7 @@ variable "tags" {
   default     = {}
 }
 ```
-Enter values below in terraform.tfvars
+Enter values below in terraform.tfvars file.
 ```
 preferred_number_of_private_subnets = 4
 
@@ -656,6 +656,487 @@ resource "aws_iam_instance_profile" "ip" {
   role = aws_iam_role.ec2_instance_role.name
 }
 ```
+Create asg-bastion-nginx.tf file, it contains resources for auto scaling group, launch templates (exist before autoscaling group).
+```
+# Get list of availability zones
+data "aws_availability_zones" "available-bastion" {
+  state = "available"
+}
+
+# creating sns topic for all the auto scaling groups
+resource "aws_sns_topic" "ACS-sns" {
+  name = "Default_CloudWatch_Alarms_Topic"
+}
+
+
+# creating notification for all the auto scaling groups
+resource "aws_autoscaling_notification" "aws_notifications" {
+  group_names = [
+    aws_autoscaling_group.bastion-asg.name,
+    aws_autoscaling_group.nginx-asg.name,
+    aws_autoscaling_group.wordpress-asg.name,
+    aws_autoscaling_group.tooling-asg.name,
+  ]
+  notifications = [
+    "autoscaling:EC2_INSTANCE_LAUNCH",
+    "autoscaling:EC2_INSTANCE_TERMINATE",
+    "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+    "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
+  ]
+
+  topic_arn = aws_sns_topic.ACS-sns.arn
+}
+
+
+resource "random_shuffle" "az_list" {
+  input = data.aws_availability_zones.available-bastion.names
+}
+
+
+
+resource "aws_launch_template" "bastion-launch-template" {
+  name                   = "bastion-launch-template"
+  instance_type          = "t2.micro"
+  image_id               = var.ami
+  vpc_security_group_ids = [aws_security_group.bastion-sg.id]
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ip.id
+  }
+
+  key_name = var.keypair
+
+  placement {
+    availability_zone = "random_shuffle.az_list.result"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "bastion-launch-template"
+    }
+  }
+
+  user_data = filebase64("${path.module}/bastion.sh")
+}
+
+
+# ---- Autoscaling for bastion  hosts
+
+
+resource "aws_autoscaling_group" "bastion-asg" {
+  name                      = "bastion-asg"
+  max_size                  = 2
+  min_size                  = 2
+  health_check_grace_period = 300
+  health_check_type         = "ELB"
+  desired_capacity          = 2
+
+  # Where you place in your subnet
+  vpc_zone_identifier = [aws_subnet.public[0].id, aws_subnet.public[1].id]
+
+  launch_template {
+    id      = aws_launch_template.bastion-launch-template.id
+    version = "$Latest"
+  }
+  tag {
+    key                 = "Name"
+    value               = "ACS-Bastion"
+    propagate_at_launch = true
+  }
+
+}
+
+resource "aws_launch_template" "nginx-launch-template" {
+  name                   = "nginx-launch-template"
+  instance_type          = "t2.micro"
+  image_id               = var.ami
+  vpc_security_group_ids = [aws_security_group.nginx-sg.id]
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ip.id
+  }
+
+  key_name = var.keypair
+
+  placement {
+    availability_zone = "random_shuffle.az_list.result"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "nginx-launch-template"
+    }
+  }
+
+  user_data = filebase64("${path.module}/nginx.sh")
+}
+
+
+# ------ Autoscslaling group for reverse proxy nginx ---------
+
+resource "aws_autoscaling_group" "nginx-asg" {
+  name                      = "nginx-asg"
+  max_size                  = 2
+  min_size                  = 1
+  health_check_grace_period = 300
+  health_check_type         = "ELB"
+  desired_capacity          = 1
+
+  vpc_zone_identifier = [aws_subnet.public[0].id, aws_subnet.public[1].id]
+
+  launch_template {
+    id      = aws_launch_template.nginx-launch-template.id
+    version = "$Latest"
+  }
+
+  tag {
+    key                 = "Name"
+    value               = "ACS-nginx"
+    propagate_at_launch = true
+  }
+
+
+}
+
+# attaching autoscaling group of nginx to external load balancer
+resource "aws_autoscaling_attachment" "asg_attachment_nginx" {
+  autoscaling_group_name = aws_autoscaling_group.nginx-asg.id
+  alb_target_group_arn   = aws_lb_target_group.nginx-tgt.arn
+}
+```
+
+Enter value below in variables.tf file
+```
+variable "ami" {
+  type        = string
+  description = "AMI ID for the launch template"
+}
+
+variable "keypair" {
+  type        = string
+  description = "Key pair for the instances"
+}
+
+variable "account_no" {
+  type        = number
+  description = "the account number"
+}
+````
+
+Enter value below in terraform.tfvars file
+```
+ami = "ami-0fb653ca2d3203ac1"
+
+keypair = "EC2 Tutorial"
+
+```
+
+Create bastion.sh file and enter content below:
+```
+#!/bin/bash
+yum install -y mysql
+yum install -y git tmux
+yum install -y ansible
+```
+
+Create nginx.sh file and the enter content below:
+```
+#!/bin/bash
+yum install -y nginx
+systemctl start nginx
+systemctl enable nginx
+git clone https://github.com/Taiwolawal/ACS-project-config.git
+mv /ACS-project-config/reverse.conf /etc/nginx/
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf-distro
+cd /etc/nginx/
+touch nginx.conf
+sed -n 'w nginx.conf' reverse.conf
+systemctl restart nginx
+rm -rf reverse.conf
+rm -rf /ACS-project-config
+```
+
+Create asg-webserver-nginx.tf file for tooling and worpress, it contains resources for auto scaling group, launch templates (exist before autoscaling group).
+
+```
+# Launch template for wordpress
+
+resource "aws_launch_template" "wordpress-launch-template" {
+  name                   = "wordpress-launch-template"
+  instance_type          = "t2.micro"
+  image_id               = var.ami
+  vpc_security_group_ids = [aws_security_group.webserver-sg.id]
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ip.id
+  }
+
+  key_name = var.keypair
+
+  placement {
+    availability_zone = "random_shuffle.az_list.result"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "wordpress-launch-template"
+    }
+  }
+
+  user_data = filebase64("${path.module}/wordpress.sh")
+}
+
+
+# ---- Autoscaling for wordpress application
+
+resource "aws_autoscaling_group" "wordpress-asg" {
+  name                      = "wordpress-asg"
+  max_size                  = 2
+  min_size                  = 1
+  health_check_grace_period = 300
+  health_check_type         = "ELB"
+  desired_capacity          = 2
+
+  # Where you place in your subnet
+  vpc_zone_identifier = [aws_subnet.private[0].id, aws_subnet.private[1].id]
+
+  launch_template {
+    id      = aws_launch_template.wordpress-launch-template.id
+    version = "$Latest"
+  }
+  tag {
+    key                 = "Name"
+    value               = "ACS-wordpress"
+    propagate_at_launch = true
+  }
+
+}
+
+
+# attaching autoscaling group of wordpress to internal load balancer
+resource "aws_autoscaling_attachment" "asg_attachment_wordpress" {
+  autoscaling_group_name = aws_autoscaling_group.wordpress-asg.id
+  alb_target_group_arn   = aws_lb_target_group.wordpress-tgt.arn
+}
+
+# launch template for tooling
+resource "aws_launch_template" "tooling-launch-template" {
+  name                   = "tooling-launch-template"
+  instance_type          = "t2.micro"
+  image_id               = var.ami
+  vpc_security_group_ids = [aws_security_group.webserver-sg.id]
+
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ip.id
+  }
+
+  key_name = var.keypair
+
+  placement {
+    availability_zone = "random_shuffle.az_list.result"
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "tooling-launch-template"
+    }
+  }
+
+  user_data = filebase64("${path.module}/tooling.sh")
+}
+
+# ---- Autoscaling for tooling 
+
+resource "aws_autoscaling_group" "tooling-asg" {
+  name                      = "tooling-asg"
+  max_size                  = 2
+  min_size                  = 1
+  health_check_grace_period = 300
+  health_check_type         = "ELB"
+  desired_capacity          = 2
+
+  # Where you place in your subnet
+  vpc_zone_identifier = [aws_subnet.private[0].id, aws_subnet.private[1].id]
+
+  launch_template {
+    id      = aws_launch_template.tooling-launch-template.id
+    version = "$Latest"
+  }
+  tag {
+    key                 = "Name"
+    value               = "ACS-tooling"
+    propagate_at_launch = true
+  }
+
+}
+
+# attaching autoscaling group of tooling application to internal loadbalancer
+resource "aws_autoscaling_attachment" "asg_attachment_tooling" {
+  autoscaling_group_name = aws_autoscaling_group.tooling-asg.id
+  alb_target_group_arn   = aws_lb_target_group.tooling-tgt.arn
+}
+```
+
+Creates output.tf, its a way of printing out value
+```
+output "alb_dns_name" {
+  value       = aws_lb.ext-alb.dns_name
+  description = "External load balance arn"
+}
+
+```
+
+Create efs.tf file contains resources to create kms key used for the elastic file  system and RDS used for encryption purposes.
+```
+# create key from key management system
+resource "aws_kms_key" "ACS-kms" {
+  description = "KMS key "
+  policy      = <<EOF
+  {
+  "Version": "2012-10-17",
+  "Id": "kms-key-policy",
+  "Statement": [
+    {
+      "Sid": "Enable IAM User Permissions",
+      "Effect": "Allow",
+      "Principal": { "AWS": "arn:aws:iam::${var.account_no}:user/admin" },
+      "Action": "kms:*",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
+
+# create key alias
+resource "aws_kms_alias" "alias" {
+  name          = "alias/kms"
+  target_key_id = aws_kms_key.ACS-kms.key_id
+}
+
+# create Elastic file system
+resource "aws_efs_file_system" "ACS-efs" {
+  encrypted  = true
+  kms_key_id = aws_kms_key.ACS-kms.arn
+
+  tags = {
+    Name = "ACS-efs"
+  }
+}
+
+
+# set first mount target for the EFS 
+resource "aws_efs_mount_target" "subnet-1" {
+  file_system_id  = aws_efs_file_system.ACS-efs.id
+  subnet_id       = aws_subnet.private[0].id
+  security_groups = [aws_security_group.datalayer-sg.id]
+}
+
+
+# set second mount target for the EFS 
+resource "aws_efs_mount_target" "subnet-2" {
+  file_system_id  = aws_efs_file_system.ACS-efs.id
+  subnet_id       = aws_subnet.private[1].id
+  security_groups = [aws_security_group.datalayer-sg.id]
+}
+
+
+# create access point for wordpress
+resource "aws_efs_access_point" "wordpress" {
+  file_system_id = aws_efs_file_system.ACS-efs.id
+
+  posix_user {
+    gid = 0
+    uid = 0
+  }
+
+  root_directory {
+    path = "/wordpress"
+
+    creation_info {
+      owner_gid   = 0
+      owner_uid   = 0
+      permissions = 0755
+    }
+
+  }
+
+}
+
+
+# create access point for tooling
+resource "aws_efs_access_point" "tooling" {
+  file_system_id = aws_efs_file_system.ACS-efs.id
+  posix_user {
+    gid = 0
+    uid = 0
+  }
+
+  root_directory {
+
+    path = "/tooling"
+
+    creation_info {
+      owner_gid   = 0
+      owner_uid   = 0
+      permissions = 0755
+    }
+
+  }
+}
+```
+
+Enter value below into variables.tf
+```
+variable "account_no" {
+  type        = number
+  description = "the account number"
+}
+
+variable "master-username" {
+  type        = string
+  description = "RDS admin username"
+}
+
+variable "master-password" {
+  type        = string
+  description = "RDS master password"
+}
+```
+In the terraform.tfvar, enter the value below
+```
+account_no = 918670967067
+
+master-username = "taiwo"
+
+master-password = "password"
+```
+
+
 
 
 
