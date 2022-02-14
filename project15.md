@@ -186,6 +186,9 @@ Wordpress and Tooling both make use of Webserver AMI
 Apply the same setting for Nginx, the major difference is the userdata input  
 ![image](https://user-images.githubusercontent.com/50557587/150422434-c2f40b05-d048-4621-a3cc-810bcfccf8b8.png)
 
+We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file, so that when the userdata is cloning the repository, it will have the updated version of the conf file 
+![image](https://user-images.githubusercontent.com/50557587/150648675-8d9df05f-833c-4af0-8564-ede28760e53b.png)
+
 Wordpress userdata
 ```
 #!/bin/bash
@@ -214,9 +217,6 @@ sed -i "s/database_name_here/wordpressdb/g" wp-config.php
 chcon -t httpd_sys_rw_content_t /var/www/html/ -R
 systemctl restart httpd
 ```
-
-We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file.  
-![image](https://user-images.githubusercontent.com/50557587/150648675-8d9df05f-833c-4af0-8564-ede28760e53b.png)
 
 Update the mount point to the file system
 `sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/`  
