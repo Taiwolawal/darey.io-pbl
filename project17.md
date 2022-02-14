@@ -1164,14 +1164,22 @@ variable "master-password" {
   description = "RDS master password"
 }
 ````
-Enter values below in terraform.tfvars
+Enter values below in terraform.tfvars file
 ```
 master-username = "taiwo"
 
 master-password = "password"
 ```
 
-
+Run terraform plan to check error and run terraform apply -auto-approve to install all necessary rsources.    
+![2](https://user-images.githubusercontent.com/50557587/153951746-40c48ee1-4b48-406c-9cf7-f942707f618f.PNG)
+![3](https://user-images.githubusercontent.com/50557587/153951710-c635a3e2-643d-45c9-a677-d48885e740ad.PNG)
+![4](https://user-images.githubusercontent.com/50557587/153951718-79637866-ac8c-45d1-bc00-90677d6b089d.PNG)
+![5](https://user-images.githubusercontent.com/50557587/153951720-b8b2880b-c175-4dd1-97e5-3f04f93411a1.PNG)
+![6](https://user-images.githubusercontent.com/50557587/153951724-cf51bc5a-55a6-431a-8d48-059d28370249.PNG)
+![7](https://user-images.githubusercontent.com/50557587/153951726-c11ace2c-6fdb-49e3-84f6-727d19349dea.PNG)
+![8](https://user-images.githubusercontent.com/50557587/153951729-b29a85a5-1286-4839-9b5c-267afc800057.PNG)
+![9](https://user-images.githubusercontent.com/50557587/153951734-c54db19d-0217-4365-973d-99d002e6c491.PNG)
 
 
 
