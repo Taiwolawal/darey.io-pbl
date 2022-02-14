@@ -274,9 +274,7 @@ Copy the endpoint of the database.
 ![image](https://user-images.githubusercontent.com/50557587/150516526-b7763799-2548-4a4f-9a08-103be95028b1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150516858-b3df64c6-7519-4122-9cec-e6360530e285.png)
 ![image](https://user-images.githubusercontent.com/50557587/150654345-7289562c-2ac0-442c-888b-2874c0c7639a.png)
-
 ![image](https://user-images.githubusercontent.com/50557587/150548725-faae3ac6-625b-4d96-86b7-8624c5770659.png)
-![image](https://user-images.githubusercontent.com/50557587/150561500-90f776ea-c484-4ceb-b0e3-2adca4e1eb99.png)
 
 Create record for our load balancer (route 53).    
 ![image](https://user-images.githubusercontent.com/50557587/150565164-f2916f80-dea4-45ee-b1bf-338906c88f3f.png)
