@@ -177,7 +177,8 @@ We can configure a rule so that we can cache tooling request and forward to the 
 ![image](https://user-images.githubusercontent.com/50557587/150386929-ae4b7310-4b2a-42ad-b3cb-acc6d80ef3c7.png)
 
 Create launch templates (Bastion, Nginx, Wordpress and Tooling).
-Wordpress and Tooling both make use of Webserver AMI
+
+Wordpress and Tooling both make use of Webserver AMI, they will be in the private subnet and Nginx will be in public subnet.
 ![image](https://user-images.githubusercontent.com/50557587/150390913-b00794e2-f633-47bc-9a9a-9a587b1d4d26.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392726-19175cec-bb25-43e8-9f3b-14dd496fe978.png)
 ![image](https://user-images.githubusercontent.com/50557587/150392902-7abfad14-faf7-4a69-9e40-49a4b2338881.png)
