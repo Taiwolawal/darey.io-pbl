@@ -219,7 +219,7 @@ chcon -t httpd_sys_rw_content_t /var/www/html/ -R
 systemctl restart httpd
 ```
 
-Update the mount point to the file system
+Update the mount point to the file system, this should be done on access points for tooling and wordpress respectively.
 `sudo mount -t efs -o tls,accesspoint=fsap-0cb279f5ee79c59f4 fs-0501ac1736dff39ea:/ /var/www/`  
 ![image](https://user-images.githubusercontent.com/50557587/150426608-2b90d1fc-62d7-44da-b724-88121304f7c1.png)
 ![image](https://user-images.githubusercontent.com/50557587/150427269-dd082338-1c79-4d3e-bc82-958f59669ee9.png)
