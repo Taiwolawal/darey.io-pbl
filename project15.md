@@ -92,7 +92,9 @@ Create database
 ![image](https://user-images.githubusercontent.com/50557587/150170847-1563e4d3-ff3d-40c0-9983-5874e011d038.png)
 ![image](https://user-images.githubusercontent.com/50557587/150170997-f8067b22-4458-4c11-90f1-63ab62a4dad6.png)
 
-Create Autoscaling group : The following steps below must take place before creating it.
+Create Autoscaling group : The two requirements are Launch Templates and Load Balancers. The Launch Templates requires AMI and Userdata while the Load balancer requires target goup
+
+The following steps below must take place before creating the Autoscaling group.
 
 Create 3 Instances (Redhat) with security group (All traffic - anywhere) named Bastion, Nginx and Webserver.
 
@@ -125,7 +127,7 @@ make rpm
 yum install -y  ./build/amazon-efs-utils*rpm
 ````
 
-Install self signed certificate for the webservers (Nginx).
+Install self signed certificate for the webservers (Nginx). The reason we are installing this because the load balancer will be sending traffic to the webserver via port 443 and also listen in port 443 thus for the connection to be secured we a self signed certificate on the instance   
 ```
 sudo mkdir /etc/ssl/private
 sudo chmod 700 /etc/ssl/private
