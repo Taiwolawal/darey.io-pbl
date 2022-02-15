@@ -60,7 +60,7 @@ Create security group for:
 ![image](https://user-images.githubusercontent.com/50557587/150141661-66347683-fa22-4463-be6b-be4ac3a7a2db.png)
 ![image](https://user-images.githubusercontent.com/50557587/150141832-3b711557-d388-4c41-8642-2625a62cbe80.png)
 
-Create certificate, ensure domain purchased is transferred to AWS Route 53. The major reason for creating a certificate first is  mainly because when creating an application load balancer there is need to select a certificate because all our instances behind a load balancer listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate.  
+Create certificate, ensure domain purchased is transferred to AWS Route 53. The major reason for creating a certificate first is  mainly because when creating an application load balancer there is need to select a certificate because all our instances behind a load balancer listens to traffic from port 443. Ensure to create record on Route 53 after creating the certificate. This are certificates we attach to all the load balancers.  
 
 Since you selected DNS validation, it will automatically write to the route 53 record.  
 ![image](https://user-images.githubusercontent.com/50557587/150143152-d06bc918-c9ec-487a-b06f-c8b7985b6859.png)
