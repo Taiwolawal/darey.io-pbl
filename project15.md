@@ -66,7 +66,7 @@ Since you selected DNS validation, it will automatically write to the route 53 r
 ![image](https://user-images.githubusercontent.com/50557587/150143152-d06bc918-c9ec-487a-b06f-c8b7985b6859.png)
 ![image](https://user-images.githubusercontent.com/50557587/150143710-6a50797b-503a-49c0-807e-901aac13d93f.png)
 
-Create Amazon EFS: Add mount target to the filesystem i.e specifying subnet. Wherever you specify your mount target the Amazon EFS becomes avaible in that subnet as such we specify it in private subnet 1 & 2 and set security group setting to datalayer security we created.      
+Create Amazon EFS: Add mount target to the filesystem i.e specifying subnet. Wherever you specify your mount target the Amazon EFS becomes available in that subnet as such we specify it in private subnet 1 & 2 so that all the resources in that subnet will have the ability to mount to the file system and set security group setting to datalayer security we created.      
 ![image](https://user-images.githubusercontent.com/50557587/150144572-24ac0645-a57a-4c14-82b1-1e21a4c3c59a.png)       
 ![image](https://user-images.githubusercontent.com/50557587/150146070-011fac1e-9617-4a8c-969e-052693b096bf.png)
 
