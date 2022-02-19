@@ -73,3 +73,9 @@ terraform {
 }
 ```
 
+![image](https://user-images.githubusercontent.com/50557587/154810019-d49926f0-36c6-48d9-b438-a28b9ec5da7c.png)
+![image](https://user-images.githubusercontent.com/50557587/154810075-6a7c7588-736b-4893-b6cf-e361586cf97d.png)
+![image](https://user-images.githubusercontent.com/50557587/154810223-d2b23d46-8734-4c1c-9f49-7e4994f1332a.png)
+![image](https://user-images.githubusercontent.com/50557587/154810615-6268e3d2-0d59-48eb-9dc7-a4288f653820.png)
+
+
