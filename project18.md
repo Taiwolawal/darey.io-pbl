@@ -59,5 +59,17 @@ resource "aws_dynamodb_table" "terraform_locks" {
   }
 }
 ```
+![image](https://user-images.githubusercontent.com/50557587/154809933-811b1dd4-86d4-4aab-a141-13c3c8fec1d8.png)
 
+```
+terraform {
+  backend "s3" {
+    bucket         = "pbl18"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
+```
 
