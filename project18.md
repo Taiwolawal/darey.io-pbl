@@ -98,18 +98,6 @@ terraform {
 
 ![image](https://user-images.githubusercontent.com/50557587/154809933-811b1dd4-86d4-4aab-a141-13c3c8fec1d8.png)
 
-```
-terraform {
-  backend "s3" {
-    bucket         = "pbl18"
-    key            = "global/s3/terraform.tfstate"
-    region         = "us-east-2"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
-```
-
 ![image](https://user-images.githubusercontent.com/50557587/154810019-d49926f0-36c6-48d9-b438-a28b9ec5da7c.png)
 ![image](https://user-images.githubusercontent.com/50557587/154810075-6a7c7588-736b-4893-b6cf-e361586cf97d.png)
 
