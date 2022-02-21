@@ -2,6 +2,15 @@
 
 The task of the project is to implement a Client Server Architecture using MySQL Database Management System (DBMS).
 
+Client-Server refers to an architecture in which two or more computers are connected together over a network to send and receive requests between one another.
+
+In their communication, each machine has its own role: the machine sending requests is usually referred as "Client" and the machine responding (serving) is called "Server".
+
+In the example above, a machine that is trying to access a Web site using Web browser or simply ‘curl’ command is a client and it sends HTTP requests to a Web server (Apache, Nginx, IIS or any other) over the Internet.
+
+If we extend this concept further and add a Database Server to our architecture, we can get this picture  
+![image](https://user-images.githubusercontent.com/50557587/154992492-ad9617ec-4d38-486c-b131-1f14875bc619.png)
+
 - Create and configure two linux-based virtual servers (EC2 instances in AWS) and connect.
 - Server A name - 'MYSQL server', Server B name - 'MYSQL client'. 
 - On MYSQL server install MYSQL Server software `sudo apt update -y` `sudo apt install mysql-server -y`.
