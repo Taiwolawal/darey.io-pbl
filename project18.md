@@ -1,12 +1,12 @@
 # Automate Infrastructure With IAC Using Terraform Part 3.
 
-This is the continuation of Project 17. In this project we are going to introduce a concept called modules and change our backend to S3. By introducing modules for our project by creating different folder e.g VPC, EFS, RDS, ALB.
+This is the continuation of Project 17. In this project we are going to refactor the project with modules, change our backend to S3 and apply DynamoDB. 
 
-We are going to change our backend to S3. Our terraform.tfstate file is stored locally on our machine, and assuming we have different engineers working on this project we need to ensure that everyone working on this project all have the same file across board, so as a result we store the file on cloud for easy access to other engineers and ensuring they all files are same.
+We are going to change our backend to S3, by default we were using our local storage. Our terraform.tfstate file is stored locally on our machine, and assuming we have different engineers working on this project we need to ensure that everyone working on this project all have the same file across board, so as a result we store the file on cloud for easy access to other engineers and ensuring they all files are same.
 
 We are going to refactor our code to use modules. Create a directory called modules, and inside the it, create directories named VPC, Security, EFS, RDS, ALB, Autoscaling, Compute. This directory created, we are going to copy files related to the named directory e.g For the VPC directory, the files needed to setup our VPC are internet-gateway, Nat-gateway, Routes etc
 
-With a module, it is reuseable by different engineers , the only thing to do is just to tweak some parameters input to your desire taste. Ensure all the arguments in the module are declared as a  variable, just to ensure we do not hardcode values.
+With module, it is reuseable by different engineers , the only thing to do is just to tweak some parameters input to your desire taste. Ensure all the arguments in the module are declared as a variable, just to ensure we do not hardcode values.
 
 Also create variables.tf file in all the created directories, so the content of the directory will have a variables.tf file and other files related to the name of the directories.
 
@@ -20,6 +20,8 @@ To make use of the content in the modules, you need to use the keyword module an
 
 
 ![image](https://user-images.githubusercontent.com/50557587/154808135-2a580979-2c52-4124-966e-3d59a536d322.png)
+
+We launch terraform apply, all the resource should work fine with all the the necessary tweak done
 ![image](https://user-images.githubusercontent.com/50557587/154808155-f539eea4-96dc-4af2-88c0-ab577f42376e.png)
 ![image](https://user-images.githubusercontent.com/50557587/154808171-6a00922b-16f2-4250-94f2-f6de596befd7.png)
 ![image](https://user-images.githubusercontent.com/50557587/154808236-04abcfd1-df07-4eaf-967b-60f77965bed5.png)
@@ -113,11 +115,12 @@ terraform {
 
 When we run terraform plan or apply, a new lock ID would be generated while running the plan. The DynamoDB is handling the lockID, it will be present until the plan or apply finishes. 
 ![image](https://user-images.githubusercontent.com/50557587/154810223-d2b23d46-8734-4c1c-9f49-7e4994f1332a.png)
+
+
+We have successfully refactored our project to use modules, introduce backend as S3 and also used DynamoDB to store our state lockfiles.
+
+ We should run terraform destroy, but before we run it, we should take note that terraform will destroy the S3 bucket and if it destroy it , terraform will go into a undefined state and delete the files you have there so avoid this by commenting out your S3 backend and run `terraform init -migrate-state` at that point it will copy your statefile back from S3 to your local storage.  
 ![image](https://user-images.githubusercontent.com/50557587/154810615-6268e3d2-0d59-48eb-9dc7-a4288f653820.png)
-
-We have successfully refactored our project to use modules, introduce backend as S3 and also used DynamoDB to store our statelockfiles.
-
- We should run terraform destroy, but before we run it, we should take note that terraform will destroy the S3 bucket and if it destroy it , terraform will go into a confused state and delete the files you have there so avoid this comment out your S3 backend and run `terraform init -migrate-state` at that point it will copy your statefile back from S3 to your local storage
  
  Note that to use S3 as a backend, you need to enable versioning on the bucket.
 
