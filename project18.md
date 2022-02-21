@@ -115,4 +115,10 @@ When we run terraform plan or apply, a new lock ID would be generated while runn
 ![image](https://user-images.githubusercontent.com/50557587/154810223-d2b23d46-8734-4c1c-9f49-7e4994f1332a.png)
 ![image](https://user-images.githubusercontent.com/50557587/154810615-6268e3d2-0d59-48eb-9dc7-a4288f653820.png)
 
+We have successfully refactored our project to use modules, introduce backend as S3 and also used DynamoDB to store our statelockfiles.
+
+ We should run terraform destroy, but before we run it, we should take note that terraform will destroy the S3 bucket and if it destroy it , terraform will go into a confused state and delete the files you have there so avoid this comment out your S3 backend and run `terraform init -migrate-state` at that point it will copy your statefile back from S3 to your local storage
+ 
+ Note that to use S3 as a backend, you need to enable versioning on the bucket.
+
 
