@@ -1,17 +1,20 @@
 # Devops Tooling Website Solution
-- The task of the project is to implement a tooling website solution which makes access to Devops tools within the corporate infrastructure easily accessible.
-- The project will implement a solution that consist of the following components:
-- i. Infrastructure: AWS
-- ii. Webserver Linux: Redhat Enterprise Linux 8
-- iii. Database Server: Unbuntu 20.04 + MySQL
-- iv. Storage Server: Redhat Enterprise Linux 8 + NFS Server
-- v. Programming Language: PHP
-- vi. Code Repository: Github
+
+The task of the project is to implement a tooling website solution which makes access to Devops tools within the corporate infrastructure easily accessible.
+The project will implement a solution that consist of the following components:
+- Infrastructure: AWS
+- Webserver Linux: Redhat Enterprise Linux 8
+- Database Server: Unbuntu 20.04 + MySQL
+- Storage Server: Redhat Enterprise Linux 8 + NFS Server
+- Programming Language: PHP
+- Code Repository: Github
 ![p7](https://user-images.githubusercontent.com/50557587/142696895-e018359e-2c9b-4a6c-848f-e22457c833e8.PNG)
 
-- The diagram above shows 3 stateless Web Servers sharing a common database and also accessing same files using  Network File System as a shared filed storage, which can also be used for back up in case a server crashes as result the content of the server is secured and safe.
+The diagram above shows 3 stateless Web Servers sharing a common database and also accessing same files using  Network File System as a shared filed storage, which can also be used for back up in case a server crashes as result the content of the server is secured and safe.
 
 ## Prepare the NFS Server
+Network File System (NFS) is a file system protocol that allows client machines to access network attached filesystems (called exports) from a host system.
+
 - Spin up a new EC2 instance with RHEL Linux Linux 8 Operating System named NFS.
 - Create Volumes for the NFS with the availability zone same as the instance type and attach volume to the volume created for NFS ensuring that in the instance slot, you select the instance associated with NFS.
 - Open the linux terminal to begin configuration of LVM on the server.
