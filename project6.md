@@ -63,8 +63,17 @@
 - Install WordPress, Apache and its dependecies on Webserver EC2 `sudo yum -y update` , `sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json`.
 - Start Apache sudo `systemctl enable httpd` , `sudo systemctl start httpd`.
 - Install PHP and its dependencies.
-
-![p](https://user-images.githubusercontent.com/50557587/140840641-01b58f12-afa1-4d4f-8147-09f424f1811f.PNG)
+```
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+sudo yum module list php
+sudo yum module reset php
+sudo yum module enable php:remi-7.4
+sudo yum install php php-opcache php-gd php-curl php-mysqlnd
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+setsebool -P httpd_execmem 1
+```
 
 - Restart Apache `sudo systemctl restart httpd`.
 - Download wordpress and copy content to /var/www/html
