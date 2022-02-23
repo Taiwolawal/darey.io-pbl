@@ -191,7 +191,7 @@ Wordpress and Tooling both make use of Webserver AMI, they will be in the privat
 Apply the same setting for Nginx, the major difference is the userdata input, AMI and security group.
 ![image](https://user-images.githubusercontent.com/50557587/150422434-c2f40b05-d048-4621-a3cc-810bcfccf8b8.png)
 
-We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file, so that when the userdata is cloning the repository, it will have the updated version of the conf file 
+We have to update the reverse.conf file by updating the end point of the internal load balancer (DNS name) in the proxy_pass section of the file, so that when the userdata is cloning the repository, it will have the updated version of the conf file     
 ![image](https://user-images.githubusercontent.com/50557587/150648675-8d9df05f-833c-4af0-8564-ede28760e53b.png)
 
 Wordpress userdata
