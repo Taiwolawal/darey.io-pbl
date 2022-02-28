@@ -28,9 +28,25 @@ Install packer on your machine and clone `https://github.com/Taiwolawal/packer-a
 Run packer build for each of the files required and confirm if the AMI's were created.  
 ![image](https://user-images.githubusercontent.com/50557587/155509676-82e4aad6-6b19-47d9-bb71-1f227f08a5ab.png)
 ![image](https://user-images.githubusercontent.com/50557587/155512423-f372c7bf-2053-4812-918f-70e6d72174b7.png)
-![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)
 
-Update
+Update the new AMI's ID from the packer build  in the terraform script  
+![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)    
+
+Create  terraform cloud account and backend. Connect your github repo (containing the terraform script) with the cloud account, this ensures that any changes made in the repo will be noticed by terraform cloud and it will run the code which is more like you running terraform plan and if you want to apply it, you will run it on the terraform cloud UI.
+![image](https://user-images.githubusercontent.com/50557587/155999037-ec8d8e18-40e6-4556-805f-38340cc7e9d7.png)
+
+On the terraform cloud, the states files created when an apply is made on the terraform script is kept on the account compared to having it locally and the backend.
+
+Run apply on the apply on the terraform script via the account UI.
+
+After the apply is run, ensure that all resources are created as expected.
+
+SSH into the Bastion instance and clone` https://github.com/Taiwolawal/ansible-deploy-pbl-19.git` which contains Ansible scripts which will be used to configure the infrastructure as required.
+
+To ensure the Ansible file can get all the required information from our AWS account such as our instance IP addresses, tags for each instances, we need to run `aws configure` and enter all required credentials.
+
+Ensure that we have ssh-agent enabled on our bastion instance, so that we can easily SSH 
+
 
 ![image](https://user-images.githubusercontent.com/50557587/155510755-80ab1621-68d9-423e-9850-ff0f89cc991c.png)
 ![image](https://user-images.githubusercontent.com/50557587/155512221-456c3a43-b98f-4ce4-aff1-119b91f9c2e9.png)
