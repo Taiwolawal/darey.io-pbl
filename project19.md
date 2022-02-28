@@ -81,4 +81,8 @@ Confirm if all configuration were all implemented.
 ![image](https://user-images.githubusercontent.com/50557587/155992344-374150b8-5907-482d-b1af-333f918e4cf4.png)
 ![image](https://user-images.githubusercontent.com/50557587/155992482-5ba5c51a-232f-42ba-8b16-b685032d8c16.png)
 
-Check all websites to confirm they are all working properly.
+Check all websites to confirm they are all working properly.  
+![image](https://user-images.githubusercontent.com/50557587/156019855-b7048a70-5dd4-454e-9271-206badba76dd.png)
+![image](https://user-images.githubusercontent.com/50557587/156019915-10eb2656-8d13-4f15-b49b-2b34bb8ed00b.png)
+
+
