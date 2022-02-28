@@ -30,14 +30,14 @@ Run packer build for each of the files required and confirm if the AMI's were cr
 ![image](https://user-images.githubusercontent.com/50557587/155512423-f372c7bf-2053-4812-918f-70e6d72174b7.png)
 
 Update the new AMI's ID from the packer build  in the terraform script  
-![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)    
-
-Create  terraform cloud account and backend. Connect your github repo (containing the terraform script) with the cloud account and this will create a workspace on the account, which is where all terraform plan, apply, destroy and other commands will be executed The workspace ensures that any changes made in the repo will be noticed by terraform cloud and it will run the code which is more like you running terraform plan and if you want to apply it, you will run it on the terraform cloud UI.   
+![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png) 
 ![image](https://user-images.githubusercontent.com/50557587/155999037-ec8d8e18-40e6-4556-805f-38340cc7e9d7.png)
 
-On your terraform cloud, the states files created when an apply is made on the terraform script is kept on the account compared to having it locally and the backend.
+Create  terraform cloud account and backend. Connect your github repo (containing the terraform script) with the cloud account and this will create a workspace on the account, which is where all terraform plan, apply, destroy and other commands will be executed. The workspace ensures that any changes made in the repo will be noticed by terraform cloud and it will run the code which is more like you running terraform plan and if you want to apply it, you will run it on the terraform cloud UI.   
 
-Run apply on the apply on the terraform script via the account UI.
+On your  workspace, the states files created when an apply is made on the terraform script is kept on the account compared to having it locally and the backend.
+
+Run apply on the terraform script via the account UI.
 
 After the apply is run, ensure that all resources are created as expected.
 
