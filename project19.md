@@ -5,7 +5,7 @@ In thsi project we will be  using Packer to build our images, and Ansible to con
 The files that would be addedd are;
 
 * AMI: for building packer images
-* Ansible: for Ansible scripts to configure the infrastucture
+* Ansible: for Ansible scripts to configure the infrastructure
 
 ### Action Plan for project 19
 
@@ -32,10 +32,10 @@ Run packer build for each of the files required and confirm if the AMI's were cr
 Update the new AMI's ID from the packer build  in the terraform script  
 ![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)    
 
-Create  terraform cloud account and backend. Connect your github repo (containing the terraform script) with the cloud account, this ensures that any changes made in the repo will be noticed by terraform cloud and it will run the code which is more like you running terraform plan and if you want to apply it, you will run it on the terraform cloud UI.
+Create  terraform cloud account and backend. Connect your github repo (containing the terraform script) with the cloud account and this will create a workspace on the account, which is where all terraform plan, apply, destroy and other commands will be executed The workspace ensures that any changes made in the repo will be noticed by terraform cloud and it will run the code which is more like you running terraform plan and if you want to apply it, you will run it on the terraform cloud UI.   
 ![image](https://user-images.githubusercontent.com/50557587/155999037-ec8d8e18-40e6-4556-805f-38340cc7e9d7.png)
 
-On the terraform cloud, the states files created when an apply is made on the terraform script is kept on the account compared to having it locally and the backend.
+On your terraform cloud, the states files created when an apply is made on the terraform script is kept on the account compared to having it locally and the backend.
 
 Run apply on the apply on the terraform script via the account UI.
 
@@ -45,7 +45,19 @@ SSH into the Bastion instance and clone` https://github.com/Taiwolawal/ansible-d
 
 To ensure the Ansible file can get all the required information from our AWS account such as our instance IP addresses, tags for each instances, we need to run `aws configure` and enter all required credentials.
 
-Ensure that we have ssh-agent enabled on our bastion instance, so that we can easily SSH 
+Ensure that we have ssh-agent enabled on our bastion instance, so that we can easily SSH into Nginx and Webservers.
+
+Update the ansible script with values such as:
+- RDS endpoints for wordpress and tooling
+- Database name, password and username for wordpress and tooling
+- Access point ID for wordpress and tooling
+- Internal load balancee DNS for nginx reverse proxy
+
+To confirm if ansible have access to all the resources run `ansible-inventory -i inventory/aws_ec2.yml --graph`.
+
+Run `ansible-playbook -i inventory/aws_ec2.yml playbooks/site.yml` to configure the infrastructure.
+
+Confirm if all configuration were all implemented.
 
 
 ![image](https://user-images.githubusercontent.com/50557587/155510755-80ab1621-68d9-423e-9850-ff0f89cc991c.png)
