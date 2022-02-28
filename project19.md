@@ -1,12 +1,41 @@
 # Automate Infrastructure With IaC using Terraform. Part 4 - Terraform Cloud.
 
+In thsi project we will be  using Packer to build our images, and Ansible to configure the infrastructure, so for that we are going to make few changes to our our existing respository from Project 18.
+
+The files that would be addedd are;
+
+* AMI: for building packer images
+* Ansible: for Ansible scripts to configure the infrastucture
+
+### Action Plan for project 19
+
+- Build images using packer
+- confirm the AMIs in the console
+- update terrafrom script with new ami IDs generated from packer build
+- create terraform cloud account and backend
+- run terraform script
+- update ansible script with values from teraform output
+     - RDS endpoints for wordpress and tooling
+     - Database name, password and username for wordpress and tooling
+     - Access point ID for wordpress and tooling
+     - Internal load balancee DNS for nginx reverse proxy
+
+- run ansible script
+- check the website
+
+Install packer on your machine and clone `https://github.com/Taiwolawal/packer-ami-pbl-19.git` which contains the AMI installation and input data required in each AMI created.
+
+Run packer build for each of the files required and confirm if the AMI's were created.  
 ![image](https://user-images.githubusercontent.com/50557587/155509676-82e4aad6-6b19-47d9-bb71-1f227f08a5ab.png)
+![image](https://user-images.githubusercontent.com/50557587/155512423-f372c7bf-2053-4812-918f-70e6d72174b7.png)
+![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)
+
+Update
 
 ![image](https://user-images.githubusercontent.com/50557587/155510755-80ab1621-68d9-423e-9850-ff0f89cc991c.png)
 ![image](https://user-images.githubusercontent.com/50557587/155512221-456c3a43-b98f-4ce4-aff1-119b91f9c2e9.png)
 
-![image](https://user-images.githubusercontent.com/50557587/155512423-f372c7bf-2053-4812-918f-70e6d72174b7.png)
-![image](https://user-images.githubusercontent.com/50557587/155521464-066a9d0d-9eda-467e-bf70-a1e99250b1c8.png)
+
 ![image](https://user-images.githubusercontent.com/50557587/155710300-2272fd7f-85cd-4627-9f4c-4ab33c8a5ee7.png)
 ![image](https://user-images.githubusercontent.com/50557587/155731918-6a4fef75-e81a-42dd-a1c0-1a027de2b117.png)
 
