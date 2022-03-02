@@ -4,7 +4,7 @@ The task of the project is to implement a tooling website solution which makes a
 The project will implement a solution that consist of the following components:
 - Infrastructure: AWS
 - Webserver Linux: Redhat Enterprise Linux 8
-- Database Server: Unbuntu 20.04 + MySQL
+- Database Server: Ubuntu 20.04 + MySQL
 - Storage Server: Redhat Enterprise Linux 8 + NFS Server
 - Programming Language: PHP
 - Code Repository: Github
