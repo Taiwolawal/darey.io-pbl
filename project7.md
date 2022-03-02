@@ -94,7 +94,7 @@ sudo mysql_secure_installation
  ```
 - Create directory  `sudo mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www`.
 - Run df -h to confirm that NFS was mounted successfully.
-- To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/apps /var/www nfs defaults 0 0`.
+- To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `<NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0`.
 - Repeat the steps above on the 2 Web Servers.
 - Install Apache
 ```
@@ -108,8 +108,8 @@ sudo mysql_secure_installation
 - Locate the log folder for Apache on the Web Server and mount it to NFS server's  export for log.
 - Since the log folder already contains some content we need to back it up because if we mount on that directory we lose the content inside.
 - Run command `sudo mv /var/log/httpd /var/log/httpd.bak`, this command renames the folder httpd to httpd.bak with the content still intact.
-- Create a new httpd folder `sudo mkdir /var/log/httpd` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/logs /var/log/httpd`.
-- To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/logs /var/log/http nfs defaults 0 0`.     
+- Create a new httpd folder `sudo mkdir /var/log/httpd` and mount `sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd`.
+- To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `<NFS-Server-Private-IP-Address>:/mnt/logs /var/log/http nfs defaults 0 0`.     
 ![p16](https://user-images.githubusercontent.com/50557587/142706687-aadec479-7a90-4146-8932-7f0b3df159ab.PNG)
 
 - Run `sudo systemctl daemon-reload` to update.
