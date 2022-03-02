@@ -92,7 +92,7 @@ sudo mysql_secure_installation
  sudo systemctl enable nfs-server
  sudo systemctl status nfs-server 
  ```
-- Create directory  `sudo mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid 172.31.9.79:/mnt/apps /var/www`.
+- Create directory  `sudo mkdir /var/www` and mount `sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www`.
 - Run df -h to confirm that NFS was mounted successfully.
 - To make sure changes persist after reboot run `sudo vi /etc/fstab` and the following line `172.31.9.79:/mnt/apps /var/www nfs defaults 0 0`.
 - Repeat the steps above on the 2 Web Servers.
