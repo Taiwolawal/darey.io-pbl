@@ -59,9 +59,7 @@ So, let us migrate the Tooling Web Application from a VM-based solution into a c
 
 MySQL in container
 
-## Step 1
-
-Pull MySQL Docker Image from Docker Hub Registry
+## Step 1: Pull MySQL Docker Image from Docker Hub Registry
 
 Start by pulling the appropriate Docker image for MySQL. You can download a specific version or opt for the latest release, as seen in the following command: `docker pull mysql/mysql-server:latest`.  
 
@@ -69,9 +67,7 @@ Start by pulling the appropriate Docker image for MySQL. You can download a spec
 
 List the images to check that you have downloaded them successfully: `docker images ls`
 
-## Step 2
-
-i. Deploy the MySQL Container to your Docker Engine
+## Step 2: Deploy the MySQL Container to your Docker Engine
 
 Once you have the image, move on to deploying a new MySQL container with: `docker run --name <container_name> -e MYSQL_ROOT_PASSWORD=<my-secret-pw> -d mysql/mysql-server:latest`
 
@@ -80,13 +76,13 @@ Once you have the image, move on to deploying a new MySQL container with: `docke
 * Replace <my-secret-pw> with your chosen password
 * In the command above, we used the latest version tag. This tag may differ according to the image you downloaded
  
-ii. Then, check to see if the MySQL container is running: Assuming the container name specified is mysql-server `docker ps -a`.
+Then, check to see if the MySQL container is running: Assuming the container name specified is mysql-server `docker ps -a`.
  
 ![Image](https://user-images.githubusercontent.com/50557587/158991318-06bd2178-a7ac-4dca-91fa-1ce0f87c473b.png)
 
- ## Step 3
+## Step 3: Connecting to the MySQL Docker Container
  
-Connecting to the MySQL Docker Container: We can either connect directly to the container running the MySQL server or use a second container as a MySQL client. Let us use a second container as a MySQL client.
+We can either connect directly to the container running the MySQL server or use a second container as a MySQL client. Let us use a second container as a MySQL client.
  
 First, create a network: `docker network create --subnet=172.18.0.0/24 tooling_app_network`.
  
@@ -115,16 +111,14 @@ Flags used
 
 As you already know, it is best practice not to connect to the MySQL server remotely using the root user. Therefore, we will create an SQL script that will create a user we can use to connect remotely.
 
-Create a file and name it create_user.sql and add the code in the file: `CREATE USER ''@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
+Create a file and name it create_user.sql and add the code in the file: `CREATE USER 'user'@'%' IDENTIFIED BY 'password'; GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
 
 Run the script `docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < ./create_user.sql`.
                                                                                           
 If you see a warning like this, it is acceptable to ignore: `mysql: [Warning] Using a password on the command line interface can be insecure.`
                                                                                           
- ## Step 4
-                                                                                          
- Connecting to the MySQL server from a second container running the MySQL client utility
-                                                                                          
+## Step 4: Connecting to the MySQL server from a second container running the MySQL client utility
+                                                                                                            
 The good thing about this approach is that you do not have to install any client tool on your laptop, and you do not need to connect directly to the container running the MySQL server
                             
 Run the MySQL Client Container: `docker run --network tooling_app_network --name mysql-client -it --rm mysql mysql -h mysqlserverhost -u  -p`.                                                                          
@@ -136,35 +130,35 @@ Flags used:
 * --network connects a container to a network
 * -h a MySQL flag specifying the MySQL server Container hostname
 * -u user created from the SQL script
-* -p password specified for the user created from the SQL script
+* -p password specified for the user created from the SQL script      
+                                         
+![Image](https://user-images.githubusercontent.com/50557587/158996222-8465c8a7-17e2-42c8-9bc2-2f197c398d1e.png)
+ 
+## Step 4: Prepare database schema 
+ 
+Now we need to prepare a database schema so that the Tooling application can connect to it.
+ 
+i. Clone the Tooling-app repository `git clone https://github.com/darey-devops/tooling.git`.
                                                                                           
+ii. On your terminal, export the location of the SQL file  `export tooling_db_schema=/home/ubuntu/tooling/html/tooling_db_schema.sql`.  
                                                                                           
-                                                                                          
+iii. Use the SQL script to create the database and prepare the schema. With the docker exec command, you can execute a command in a running container. `docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < $tooling_db_schema `.
+ 
+iv. Edit the .env file in the tooling/html folder with your db credentials used in your create_user.sql.  
+ 
+![image](https://user-images.githubusercontent.com/50557587/158998675-73aed6df-d21b-4773-93dc-05bec8f2c406.png)
+ 
+v. Run the Tooling App                                                                                           
 
+Containerization of an application starts with creation of a file with a special name - 'Dockerfile' (without any extensions). This can be considered as a 'recipe' or 'instruction' that tells Docker how to pack your application into a container. In this project, we will build your container from a pre-created Dockerfile. 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+Ensure you are inside the folder that has the Dockerfile and build your container: `docker build -t tooling:0.0.1 .` .
+
+In the above command, we specify a parameter -t, so that the image can be tagged tooling:0.0.1 . Also, you have to notice the . at the end. This is important as that tells Docker to locate the Dockerfile in the current directory you are running the command. Otherwise, you would need to specify the absolute path to the Dockerfile.
+                                                                                          
+vi. Run the container: `docker run --network tooling_app_network -p 8085:80 -it tooling:0.0.1`.                                                                                         
+![20complte](https://user-images.githubusercontent.com/50557587/159000380-f12d662e-115c-4959-8f01-750c99ab85ea.PNG)
+
 
 
 
