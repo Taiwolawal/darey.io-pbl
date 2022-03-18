@@ -15,6 +15,7 @@ First, we need to install Docker Engine, which is a client-server application th
   Lets install Docker on an Ubuntu instance
   
   * Set up the repository  
+  
   ```
   sudo apt-get update
   sudo apt-get install \
@@ -22,7 +23,7 @@ First, we need to install Docker Engine, which is a client-server application th
     curl \
     gnupg \
     lsb-release
-   ```
+  ```
 
-
+* Add Docker’s official GPG key: `curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg`.
 
