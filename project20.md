@@ -117,8 +117,6 @@ As you already know, it is best practice not to connect to the MySQL server remo
 
 Create a file and name it create_user.sql and add the code in the file: `CREATE USER ''@'%' IDENTIFIED BY ''; GRANT ALL PRIVILEGES ON * . * TO ''@'%';`
 
- 
-
 Run the script `docker exec -i mysql-server mysql -uroot -p$MYSQL_PW < ./create_user.sql`.
                                                                                           
 If you see a warning like this, it is acceptable to ignore: `mysql: [Warning] Using a password on the command line interface can be insecure.`
@@ -130,7 +128,15 @@ If you see a warning like this, it is acceptable to ignore: `mysql: [Warning] Us
 The good thing about this approach is that you do not have to install any client tool on your laptop, and you do not need to connect directly to the container running the MySQL server
                             
 Run the MySQL Client Container: `docker run --network tooling_app_network --name mysql-client -it --rm mysql mysql -h mysqlserverhost -u  -p`.                                                                          
-                                                                                          
+ 
+Flags used:
+* --name gives the container a name
+* -it runs in interactive mode and Allocate a pseudo-TTY
+* --rm automatically removes the container when it exits
+* --network connects a container to a network
+* -h a MySQL flag specifying the MySQL server Container hostname
+* -u user created from the SQL script
+* -p password specified for the user created from the SQL script
                                                                                           
                                                                                           
                                                                                           
