@@ -1,3 +1,6 @@
-# MIGRATION TO THE СLOUD WITH CONTAINERIZATION. PART 1 – DOCKER & AMP; DOCKER COMPOSE
+# MIGRATION TO THE СLOUD WITH CONTAINERIZATION. PART 1 – DOCKER
 
-gggg
+In this project, we will learn how to solve this problem and practice the technology that revolutionized application distribution and deployment back in 2013! We are talking of Containers and imply Docker. Even though there are other application containerization technologies, Docker is the standard and the default choice for shipping your app in a container!
+
+
+
