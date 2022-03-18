@@ -1,6 +1,16 @@
 # MIGRATION TO THE СLOUD WITH CONTAINERIZATION. PART 1 – DOCKER
 
-In this project, we will learn how to solve this problem and practice the technology that revolutionized application distribution and deployment back in 2013! We are talking of Containers and imply Docker. Even though there are other application containerization technologies, Docker is the standard and the default choice for shipping your app in a container!
+In this project, we will learn practice the technology that revolutionized application distribution and deployment back in 2013! 
+
+We are talking of Containers and imply Docker. Even though there are other application containerization technologies, Docker is the standard and the default choice for shipping your app in a container!
+
+* Install Docker and prepare for migration to the Cloud
+
+First, we need to install Docker Engine, which is a client-server application that contains:
+
+  * A server with a long-running daemon process dockerd.
+  * APIs that specify interfaces that programs can use to talk to and instruct the Docker daemon.
+  * A command-line interface (CLI) client docker.
 
 
 
