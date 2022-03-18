@@ -11,6 +11,18 @@ First, we need to install Docker Engine, which is a client-server application th
   * A server with a long-running daemon process dockerd.
   * APIs that specify interfaces that programs can use to talk to and instruct the Docker daemon.
   * A command-line interface (CLI) client docker.
+  
+  Lets install Docker on an Ubuntu instance
+  
+  * Set up the repository  
+  ```
+  sudo apt-get update
+  sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+   ```
 
 
 
