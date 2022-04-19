@@ -23,3 +23,5 @@ kubectl installation on windows https://www.youtube.com/watch?v=UE1UqcaSYpM&ab_c
 ![image](https://user-images.githubusercontent.com/50557587/162788067-1d03d47f-300b-4d43-b995-62b8503929fe.png)
 ![image](https://user-images.githubusercontent.com/50557587/162788196-0c66dabf-1af1-4c6b-bb31-1e95e1250072.png)
 ![image](https://user-images.githubusercontent.com/50557587/162788739-079719ee-922b-45ee-ae5c-c21541ee662a.png)
+![image](https://user-images.githubusercontent.com/50557587/164046891-d8ab979a-4966-450c-99c3-45891060c7b2.png)
+![image](https://user-images.githubusercontent.com/50557587/164048787-3cd1eba5-54b4-48a9-abe4-254b1b78929e.png)
