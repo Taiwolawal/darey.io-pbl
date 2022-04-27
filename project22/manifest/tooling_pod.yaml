@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tooling-app
+  labels:
+    app: tooling-app
+spec:
+  nodeSelector:
+    post: st
+  containers:
+    - name: tooling
+      image: akingo/tooling
+      ports:
+        - containerPort: 80
+          protocol: TCP

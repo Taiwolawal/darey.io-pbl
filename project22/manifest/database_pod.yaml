@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database
+  labels:
+    app: database
+spec:
+   nodeSelector:
+     post: st
+   containers:
+    - name: database
+      image: mysql/mysql-server
+      ports:
+        - containerPort: 3306
+          protocol: TCP
+      env:
+        - name: MYSQLROOTPASSWORD
+          value: password
+
+        - name: MYSQL_USER
+          value: tooling
+    
+        - name: MYSQL_DATABASE
+          value: toolingdb
+        
+        - name: MYSQL_PASSWORD
+          value: password
