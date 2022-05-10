@@ -36,6 +36,17 @@ for i in 0 1 2; do
 done
 ```
 
+```
+for i in 0 1 2; do
+  instance="${NAME}-master-${i}"
+  external_ip=$(aws ec2 describe-instances \
+    --filters "Name=tag:Name,Values=${instance}" \
+    --output text --query 'Reservations[].Instances[].PublicIpAddress')
+  scp -i ../ssh/${NAME}.id_rsa \
+    admin.kubeconfig kube-controller-manager.kubeconfig kube-scheduler.kubeconfig  ubuntu@${external_ip}:~/; \
+done
+```
+
 ![image](https://user-images.githubusercontent.com/50557587/164048787-3cd1eba5-54b4-48a9-abe4-254b1b78929e.png)
 ![image](https://user-images.githubusercontent.com/50557587/164084830-96d23f97-dfd2-4dcb-9d41-e4acb6521f6b.png)
 ![image](https://user-images.githubusercontent.com/50557587/165284707-a1cf3faf-c97a-441a-b685-b7039afe1f7d.png)
