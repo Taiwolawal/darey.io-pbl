@@ -4,12 +4,11 @@ metadata:
   name: nginx-pod
   labels:
     app: nginx-pod
+    type: front-end
 spec:
   containers:
-    - name: nginx
-      image: nginx:latest
-      ports:
-        - containerPort: 80
-          protocol: TCP
-  nodeSelector:
-    node: first
+  - name: nginx-pod
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+      protocol: TCP
