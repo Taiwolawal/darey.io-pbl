@@ -1,13 +1,27 @@
-apiVersion: v1
-kind: Service
+#Part 1
+apiVersion: apps/v1
+kind: ReplicaSet
 metadata:
-  name: nginx-service
+  name: nginx-rs
+  labels:
+    app: myapp
+    tier: front-end
 spec:
+  replicas: 3
   selector:
-    tier: frontend
-  type: NodePort
-  ports:
-   - targetPort: 80
-     port: 80
-     nodePort: 30000
-     protocol: TCP
+    matchLabels:
+      app: nginx-pod
+#Part 2
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+         app: nginx-pod
+         type: front-end
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx-pod
+        ports:
+        - containerPort: 80
+          protocol: TCP
