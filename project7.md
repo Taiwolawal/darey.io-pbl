@@ -13,7 +13,7 @@ The project will implement a solution that consist of the following components:
 The diagram above shows 3 stateless Web Servers sharing a common database and also accessing same files using  Network File System as a shared filed storage, which can also be used for back up in case a server crashes as result the content of the server is secured and safe.
 
 ## Prepare the NFS Server
-Network File System (NFS) is a file system protocol that allows client machines to access network attached filesystems (called exports) from a host system.
+Network File System (NFS) is a file system protocol that allows client machines to access network attached filesystems (called exports) from a host system i.e to facilitate remote file sharing between servers.
 
 - Spin up a new EC2 instance with RHEL Linux Linux 8 Operating System named NFS.
 - Create Volumes for the NFS with the availability zone same as the instance type and attach volume to the volume created for NFS ensuring that in the instance slot, you select the instance associated with NFS.
