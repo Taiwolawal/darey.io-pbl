@@ -1,4 +1,5 @@
 # Continous Integration Pipeline For Tooling Website.
+- Continuous integration (CI) is a software development strategy that increases the speed of development while ensuring the quality of the code that teams deploy.
 - The task of the project is to start automating part of our routine tasks with free and open source automation server  - JENKINS.
 - In the project we are going to utilize Jenkins CI capabilities to make sure that every change made to the source code in Github https://github.com/Taiwolawal/tooling will be automatically be updated to the Tooling website.
 - The updated architecture will look like the screenshot below upon completion of this project.  
