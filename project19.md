@@ -1,6 +1,6 @@
 # Automate Infrastructure With IaC using Terraform. Part 4 - Terraform Cloud.
 
-In thsi project we will be  using Packer to build our images, and Ansible to configure the infrastructure, so for that we are going to make few changes to our our existing respository from Project 18.
+In this project we will be  using Packer to build our images, and Ansible to configure the infrastructure, so for that we are going to make few changes to our our existing repository from Project 18.
 
 The files that would be addedd are;
 
