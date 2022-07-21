@@ -414,6 +414,7 @@ kubectl konfig import --save kubeconfig
 ![image](https://user-images.githubusercontent.com/50557587/180189234-2c128873-0ff9-4d40-86ff-63383029f667.png)
 
 * Now we can run kubectl to interact with the cluster
+* Change file permissions on the configuration file ```chmod 600 ~/.kube/config```.
 
 ![image](https://user-images.githubusercontent.com/50557587/180189399-ad9dca37-9e71-4083-acf6-79f05a5f5ebe.png)
 
@@ -422,6 +423,14 @@ kubectl konfig import --save kubeconfig
 ![image](https://user-images.githubusercontent.com/50557587/180192798-39b06312-a7ae-4145-b808-4a745ad819f2.png)
 
 ![image](https://user-images.githubusercontent.com/50557587/180193000-6f95bcda-bc18-499a-a3e1-829f06c22c46.png)
+
+## Deploying Hashicorp Vault With Helm
+* Adding the Hashicorp's repository to helm: ```helm repo add hashicorp https://helm.releases.hashicorp.com```
+* Updating helm repo: ```helm repo update```.
+* Installing the chart: ```helm install vault hashicorp/vault```
+
+![image](https://user-images.githubusercontent.com/50557587/180263563-76b74857-8bb2-418d-b92f-8c5be8bcca58.png)
+
 
 
 
