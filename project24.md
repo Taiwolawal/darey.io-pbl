@@ -44,5 +44,9 @@ kubectl konfig import --save kubeconfig
 
 ![image](https://user-images.githubusercontent.com/50557587/180194007-6fd3178c-5080-4f7c-8a0c-18f582d7c9af.png)
 
+![image](https://user-images.githubusercontent.com/50557587/180194614-35333a48-9420-4750-9e1a-1185df1e4d87.png)
+
+![image](https://user-images.githubusercontent.com/50557587/180197603-e1943358-6290-4ea6-8971-1fabcf4f6ad8.png)
+
 
 
