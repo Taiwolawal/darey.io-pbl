@@ -413,12 +413,9 @@ kubectl konfig import --save kubeconfig
 
 ![image](https://user-images.githubusercontent.com/50557587/180189234-2c128873-0ff9-4d40-86ff-63383029f667.png)
 
-![image](https://user-images.githubusercontent.com/50557587/180189399-ad9dca37-9e71-4083-acf6-79f05a5f5ebe.png)
-
 * Now we can run kubectl to interact with the cluster
 
-![image](https://user-images.githubusercontent.com/50557587/180194192-fc4d2fc9-76b3-4872-9718-ecd72f868ea8.png)
-
+![image](https://user-images.githubusercontent.com/50557587/180189399-ad9dca37-9e71-4083-acf6-79f05a5f5ebe.png)
 
 ![image](https://user-images.githubusercontent.com/50557587/180192232-d7e52a67-1c9a-4040-827c-32e4d15a5358.png)
 
