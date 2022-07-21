@@ -380,13 +380,14 @@ provider "kubernetes" {
 * Adding the Jenkins' repository to helm so it can be easily downloaded and deployed: ```$ helm repo add jenkins https://charts.jenkins.io```
 * Updating helm repo: ```$ helm repo update```
 * Installing the chart: ```$ helm install myjenkins jenkins/jenkins --kubeconfig kubeconfig```
-*  Installation of the chart was giving error, so I had to troubleshoot and found out that the version of the helm installed was faulty so I had to revert from 1.24.0 to 1.23.6
+* The jenkins chart was giving error so I ran this command ```curl -L https://git.io/get_helm.sh | bash -s -- --version v3.8.2```.
+*  Installation of the kubectl was giving error also, so I had to troubleshoot and found out that the version of the kubectl 1.24.0 installed was having issues so I had to revert  to 1.23.6
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 ```
-* To avoid typing --kubeconfig kubeconfig anytime want to run helm command
+* To avoid typing --kubeconfig kubeconfig anytime want to run kubectl command
 
 Link to get krew installation https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 ```
@@ -408,10 +409,13 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 kubectl krew install konfig
 kubectl konfig import --save kubeconfig
 ```
+* To show all the contexts for the clusters configured in my kubeconfig. ```$ kubectl config get-contexts```
 
 ![image](https://user-images.githubusercontent.com/50557587/180189234-2c128873-0ff9-4d40-86ff-63383029f667.png)
 
 ![image](https://user-images.githubusercontent.com/50557587/180189399-ad9dca37-9e71-4083-acf6-79f05a5f5ebe.png)
+
+* Now we can run kubectl to interact with the cluster
 
 ![image](https://user-images.githubusercontent.com/50557587/180194192-fc4d2fc9-76b3-4872-9718-ecd72f868ea8.png)
 
