@@ -358,7 +358,7 @@ provider "kubernetes" {
 }
 ```
 
-* Run ```terraform init''' command
+* Run ```terraform init``` command
 ![image](https://user-images.githubusercontent.com/50557587/180241574-cc8e5f6c-cb0c-41ea-aed4-a00a09bdba7d.png)
 ![image](https://user-images.githubusercontent.com/50557587/180241649-e4afecf8-aea1-4cd6-b582-ccc4197fd852.png)
 
@@ -379,21 +379,14 @@ provider "kubernetes" {
 ## Deploying Jenkins With Helm
 * Adding the Jenkins' repository to helm so it can be easily downloaded and deployed: ```$ helm repo add jenkins https://charts.jenkins.io```
 * Updating helm repo: ```$ helm repo update```
-
-
-
-
-
-
-
-curl -L https://git.io/get_helm.sh | bash -s -- --version v3.8.2
-kubectl issue resolved by reverting from 1.24.0 to 1.23.6
+* Installing the chart: ```$ helm install myjenkins jenkins/jenkins --kubeconfig kubeconfig```
+*  Installation of the chart was giving error, so I had to troubleshoot and found out that the version of the helm installed was faulty so I had to revert from 1.24.0 to 1.23.6
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 ```
-
+* To avoid typing --kubeconfig kubeconfig anytime want to run helm command
 
 Link to get krew installation https://krew.sigs.k8s.io/docs/user-guide/setup/install/
 ```
