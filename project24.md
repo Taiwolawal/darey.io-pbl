@@ -362,7 +362,7 @@ provider "kubernetes" {
 ![image](https://user-images.githubusercontent.com/50557587/180241574-cc8e5f6c-cb0c-41ea-aed4-a00a09bdba7d.png)
 ![image](https://user-images.githubusercontent.com/50557587/180241649-e4afecf8-aea1-4cd6-b582-ccc4197fd852.png)
 
-* Create kubeconfig file using awscli: ```aws eks update-kubecofig --name tooling-app-eks --region us-west-1 --kubeconfig kubeconfig```
+* Create kubeconfig file using awscli: ```aws eks update-kubeconfig --name tooling-app-eks --region us-west-1 --kubeconfig kubeconfig```
 
 * Run terraform apply to create our cluster
 ![image](https://user-images.githubusercontent.com/50557587/180242396-9c3340f5-3d0f-4536-a425-b5c3daaeace8.png)
