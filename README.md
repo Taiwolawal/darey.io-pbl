@@ -1,2 +1,15 @@
-# darey.io-pbl
-DevOps project in darey.io
+# DevOps project in darey.io
+This repository contains most of the real-life projects I carried out during my DevOps career journey
+
+## Table Of Contents
+Project 1: [SETTING UP A LAMP STACK WEB SERVER IN THE AWS CLOUD] 
+Project 2:
+Project 3:
+Project 4:
+Project 5:
+Project 6:
+Project 7:
+Project 8:
+Project 9:
+Project 10:
+Project 11:
